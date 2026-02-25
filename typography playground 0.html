@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Playground</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Lora:wght@400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --tertiary-bg: #2a2a2a;
+            --accent-color: #007aff;
+            --accent-hover: #0056cc;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #606060;
+            --border-color: #333333;
+            --border-hover: #4a4a4a;
+            --success-color: #30d158;
+            --warning-color: #ff9f0a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            min-height: 100vh;
+            gap: 0;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: linear-gradient(180deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .control-group {
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .control-group:last-child {
+            border-bottom: none;
+        }
+
+        .control-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-label i {
+            color: var(--accent-color);
+            width: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control:hover {
+            border-color: var(--border-hover);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23a0a0a0' viewBox='0 0 16 16'%3e%3cpath d='m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+
+        .range-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .range-input {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            background: var(--tertiary-bg);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .range-input::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+        }
+
+        .range-value {
+            min-width: 40px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--tertiary-bg);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: var(--glass-bg);
+        }
+
+        .checkbox-item:hover {
+            background: var(--tertiary-bg);
+            border-color: var(--border-hover);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            top: -1px;
+            left: 2px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-item label {
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .color-input {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .color-input::-webkit-color-swatch {
+            border: none;
+            border-radius: 6px;
+            box-shadow: inset 0 0 0 1px var(--border-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            background: var(--primary-bg);
+            overflow: hidden;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+        }
+
+        .tab-group {
+            display: flex;
+            gap: 2px;
+            background: var(--tertiary-bg);
+            border-radius: 8px;
+            padding: 2px;
+        }
+
+        .tab-button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .tab-button:hover:not(.active) {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--tertiary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Preview Area */
+        .preview-container {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        .preview-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .preview-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .preview-section {
+            display: none;
+        }
+
+        .preview-section.active {
+            display: block;
+        }
+
+        .sample-text {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .sample-text:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .editable-text {
+            outline: none;
+            background: transparent;
+            border: none;
+            color: inherit;
+            font: inherit;
+            width: 100%;
+            resize: none;
+            min-height: 200px;
+        }
+
+        .typography-showcase {
+            display: grid;
+            gap: 32px;
+        }
+
+        .heading-samples {
+            display: grid;
+            gap: 24px;
+        }
+
+        .paragraph-samples {
+            display: grid;
+            gap: 20px;
+        }
+
+        /* Code Output */
+        .css-output {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--text-secondary);
+        }
+
+        .css-property {
+            color: #ff7b72;
+        }
+
+        .css-value {
+            color: #79c0ff;
+        }
+
+        .css-comment {
+            color: #8b949e;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                max-height: 40vh;
+            }
+            
+            .preview-container {
+                padding: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sample-text {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Controls -->
+        <div class="sidebar">
+            <div class="header">
+                <h1>Typography Lab</h1>
+                <p>Professional type design toolkit</p>
+            </div>
+
+            <!-- Font Family -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-font"></i>
+                    Font Family
+                </div>
+                <select id="fontFamily" class="form-control">
+                    <option value="Inter">Inter (Sans Serif)</option>
+                    <option value="Playfair Display">Playfair Display (Serif)</option>
+                    <option value="JetBrains Mono">JetBrains Mono (Monospace)</option>
+                    <option value="Crimson Text">Crimson Text (Serif)</option>
+                    <option value="Source Sans Pro">Source Sans Pro (Sans)</option>
+                    <option value="Lora">Lora (Serif)</option>
+                    <option value="Roboto">Roboto (Sans Serif)</option>
+                    <option value="Montserrat">Montserrat (Sans Serif)</option>
+                </select>
+            </div>
+
+            <!-- Font Weight -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-bold"></i>
+                    Font Weight
+                </div>
+                <select id="fontWeight" class="form-control">
+                    <option value="100">Thin (100)</option>
+                    <option value="200">Extra Light (200)</option>
+                    <option value="300">Light (300)</option>
+                    <option value="400" selected>Regular (400)</option>
+                    <option value="500">Medium (500)</option>
+                    <option value="600">Semi Bold (600)</option>
+                    <option value="700">Bold (700)</option>
+                    <option value="800">Extra Bold (800)</option>
+                    <option value="900">Black (900)</option>
+                </select>
+            </div>
+
+            <!-- Font Size -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-text-height"></i>
+                    Font Size
+                </div>
+                <div class="range-group">
+                    <input type="range" id="fontSize" class="range-input" min="12" max="72" value="16">
+                    <span id="fontSizeValue" class="range-value">16px</span>
+                </div>
+            </div>
+
+            <!-- Line Height -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-arrows-alt-v"></i>
+                    Line Height
+                </div>
+                <div class="range-group">
+                    <input type="range" id="lineHeight" class="range-input" min="1" max="3" step="0.1" value="1.6">
+                    <span id="lineHeightValue" class="range-value">1.6</span>
+                </div>
+            </div>
+
+            <!-- Letter Spacing -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-arrows-alt-h"></i>
+                    Letter Spacing
+                </div>
+                <div class="range-group">
+                    <input type="range" id="letterSpacing" class="range-input" min="-2" max="10" step="0.1" value="0">
+                    <span id="letterSpacingValue" class="range-value">0px</span>
+                </div>
+            </div>
+
+            <!-- Word Spacing -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-space-shuttle"></i>
+                    Word Spacing
+                </div>
+                <div class="range-group">
+                    <input type="range" id="wordSpacing" class="range-input" min="0" max="20" step="1" value="0">
+                    <span id="wordSpacingValue" class="range-value">0px</span>
+                </div>
+            </div>
+
+            <!-- Text Color -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-palette"></i>
+                    Text Color
+                </div>
+                <input type="color" id="textColor" class="color-input" value="#ffffff">
+            </div>
+
+            <!-- Text Styles -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-italic"></i>
+                    Text Styles
+                </div>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="italic">
+                        <label for="italic">Italic</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="underline">
+                        <label for="underline">Underline</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="uppercase">
+                        <label for="uppercase">Uppercase</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Align -->
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fas fa-align-left"></i>
+                    Text Align
+                </div>
+                <select id="textAlign" class="form-control">
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="tab-group">
+                    <button class="tab-button active" data-tab="preview">Preview</button>
+                    <button class="tab-button" data-tab="css">CSS Output</button>
+                    <button class="tab-button" data-tab="samples">Typography Scale</button>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-undo"></i>
+                        Reset
+                    </button>
+                    <button class="btn btn-primary" id="exportBtn">
+                        <i class="fas fa-download"></i>
+                        Export CSS
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <!-- Preview Tab -->
+                <div id="preview" class="preview-section active">
+                    <div class="sample-text">
+                        <textarea id="editableText" class="editable-text" placeholder="Type your text here to see it styled in real-time...">Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.
+
+Typography plays a crucial role in graphic design, web design, and user interface design. Good typography enhances readability, establishes visual hierarchy, and creates a strong first impression. It communicates tone and mood while supporting the overall design aesthetic.
+
+Modern typography has evolved significantly with digital technologies, offering designers unprecedented control over letterforms, spacing, and layout. From traditional serif fonts to contemporary sans-serif designs, each typeface tells a story and serves a specific purpose in visual communication.</textarea>
+                    </div>
+                </div>
+
+                <!-- CSS Output Tab -->
+                <div id="css" class="preview-section">
+                    <div class="css-output" id="cssOutput">
+                        /* Typography Styles */
+                    </div>
+                </div>
+
+                <!-- Typography Scale Tab -->
+                <div id="samples" class="preview-section">
+                    <div class="typography-showcase">
+                        <div class="heading-samples">
+                            <div class="sample-text" id="h1Sample">
+                                <h1 style="margin-bottom: 16px;">Heading 1 - Primary Title</h1>
+                                <p>Perfect for main page titles and hero sections</p>
+                            </div>
+                            <div class="sample-text" id="h2Sample">
+                                <h2 style="margin-bottom: 12px;">Heading 2 - Section Header</h2>
+                                <p>Ideal for section headers and important subheadings</p>
+                            </div>
+                            <div class="sample-text" id="h3Sample">
+                                <h3 style="margin-bottom: 8px;">Heading 3 - Subsection</h3>
+                                <p>Great for subsections and article headings</p>
+                            </div>
+                        </div>
+                        <div class="paragraph-samples">
+                            <div class="sample-text" id="bodyText">
+                                <p><strong>Body Text:</strong> This is the standard paragraph text that forms the backbone of your content. It should be highly readable and comfortable for extended reading sessions.</p>
+                            </div>
+                            <div class="sample-text" id="smallText">
+                                <small>Small text for captions, footnotes, and secondary information that supports the main content.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TypographyPlayground {
+            constructor() {
+                this.initializeElements();
+                this.bindEvents();
+                this.updatePreview();
+            }
+
+            initializeElements() {
+                // Form controls
+                this.fontFamily = document.getElementById('fontFamily');
+                this.fontWeight = document.getElementById('fontWeight');
+                this.fontSize = document.getElementById('fontSize');
+                this.lineHeight = document.getElementById('lineHeight');
+                this.letterSpacing = document.getElementById('letterSpacing');
+                this.wordSpacing = document.getElementById('wordSpacing');
+                this.textColor = document.getElementById('textColor');
+                this.italic = document.getElementById('italic');
+                this.underline = document.getElementById('underline');
+                this.uppercase = document.getElementById('uppercase');
+                this.textAlign = document.getElementById('textAlign');
+
+                // Preview elements
+                this.editableText = document.getElementById('editableText');
+                this.cssOutput = document.getElementById('cssOutput');
+
+                // Buttons
+                this.resetBtn = document.getElementById('resetBtn');
+                this.exportBtn = document.getElementById('exportBtn');
+
+                // Tab system
+                this.tabButtons = document.querySelectorAll('.tab-button');
+                this.previewSections = document.querySelectorAll('.preview-section');
+
+                // Range value displays
+                this.fontSizeValue = document.getElementById('fontSizeValue');
+                this.lineHeightValue = document.getElementById('lineHeightValue');
+                this.letterSpacingValue = document.getElementById('letterSpacingValue');
+                this.wordSpacingValue = document.getElementById('wordSpacingValue');
+            }
+
+            bindEvents() {
+                // Form controls
+                [this.fontFamily, this.fontWeight, this.textColor, this.textAlign].forEach(control => {
+                    control.addEventListener('change', () => this.updatePreview());
+                });
+
+                [this.fontSize, this.lineHeight, this.letterSpacing, this.wordSpacing].forEach(control => {
+                    control.addEventListener('input', () => this.updatePreview());
+                });
+
+                [this.italic, this.underline, this.uppercase].forEach(control => {
+                    control.addEventListener('change', () => this.updatePreview());
+                });
+
+                // Editable text
+                this.editableText.addEventListener('input', () => this.updatePreview());
+
+                // Buttons
+                this.resetBtn.addEventListener('click', () => this.resetToDefaults());
+                this.exportBtn.addEventListener('click', () => this.exportCSS());
+
+                // Tab system
+                this.tabButtons.forEach(button => {
+                    button.addEventListener('click', () => this.switchTab(button.dataset.tab));
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        if (e.key === 'e') {
+                            e.preventDefault();
+                            this.exportCSS();
+                        } else if (e.key === 'r') {
+                            e.preventDefault();
+                            this.resetToDefaults();
+                        }
+                    }
+                });
+            }
+
+            updatePreview() {
+                const styles = this.generateStyles();
+                
+                // Update range value displays
+                this.fontSizeValue.textContent = `${this.fontSize.value}px`;
+                this.lineHeightValue.textContent = this.lineHeight.value;
+                this.letterSpacingValue.textContent = `${this.letterSpacing.value}px`;
+                this.wordSpacingValue.textContent = `${this.wordSpacing.value}px`;
+
+                // Apply styles to editable text
+                Object.assign(this.editableText.style, styles);
+
+                // Update typography showcase
+                this.updateTypographyShowcase(styles);
+
+                // Update CSS output
+                this.updateCSSOutput(styles);
+            }
+
+            generateStyles() {
+                return {
+                    fontFamily: `"${this.fontFamily.value}", sans-serif`,
+                    fontWeight: this.fontWeight.value,
+                    fontSize: `${this.fontSize.value}px`,
+                    lineHeight: this.lineHeight.value,
+                    letterSpacing: `${this.letterSpacing.value}px`,
+                    wordSpacing: `${this.wordSpacing.value}px`,
+                    color: this.textColor.value,
+                    fontStyle: this.italic.checked ? 'italic' : 'normal',
+                    textDecoration: this.underline.checked ? 'underline' : 'none',
+                    textTransform: this.uppercase.checked ? 'uppercase' : 'none',
+                    textAlign: this.textAlign.value
+                };
+            }
+
+            updateTypographyShowcase(baseStyles) {
+                // H1 Sample
+                const h1 = document.querySelector('#h1Sample h1');
+                Object.assign(h1.style, {
+                    ...baseStyles,
+                    fontSize: `${parseInt(this.fontSize.value) * 2.5}px`,
+                    fontWeight: Math.max(600, parseInt(this.fontWeight.value)),
+                    lineHeight: '1.2'
+                });
+
+                // H2 Sample
+                const h2 = document.querySelector('#h2Sample h2');
+                Object.assign(h2.style, {
+                    ...baseStyles,
+                    fontSize: `${parseInt(this.fontSize.value) * 2}px`,
+                    fontWeight: Math.max(500, parseInt(this.fontWeight.value)),
+                    lineHeight: '1.3'
+                });
+
+                // H3 Sample
+                const h3 = document.querySelector('#h3Sample h3');
+                Object.assign(h3.style, {
+                    ...baseStyles,
+                    fontSize: `${parseInt(this.fontSize.value) * 1.5}px`,
+                    fontWeight: Math.max(500, parseInt(this.fontWeight.value)),
+                    lineHeight: '1.4'
+                });
+
+                // Body Text Sample
+                const bodyText = document.querySelector('#bodyText p');
+                Object.assign(bodyText.style, baseStyles);
+
+                // Small Text Sample
+                const smallText = document.querySelector('#smallText small');
+                Object.assign(smallText.style, {
+                    ...baseStyles,
+                    fontSize: `${parseInt(this.fontSize.value) * 0.85}px`,
+                    opacity: '0.8'
+                });
+
+                // Update supporting text with base styles
+                document.querySelectorAll('#h1Sample p, #h2Sample p, #h3Sample p').forEach(p => {
+                    Object.assign(p.style, {
+                        fontFamily: baseStyles.fontFamily,
+                        color: baseStyles.color,
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        opacity: '0.7'
+                    });
+                });
+            }
+
+            updateCSSOutput(styles) {
+                const css = `/* Generated Typography Styles */
+.typography-element {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${styles.fontWeight}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${styles.fontSize}</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">${styles.lineHeight}</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">word-spacing</span>: <span class="css-value">${styles.wordSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+    <span class="css-property">font-style</span>: <span class="css-value">${styles.fontStyle}</span>;
+    <span class="css-property">text-decoration</span>: <span class="css-value">${styles.textDecoration}</span>;
+    <span class="css-property">text-transform</span>: <span class="css-value">${styles.textTransform}</span>;
+    <span class="css-property">text-align</span>: <span class="css-value">${styles.textAlign}</span>;
+}
+
+<span class="css-comment">/* Typography Scale */</span>
+.heading-1 {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${Math.max(600, parseInt(this.fontWeight.value))}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 2.5}px</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">1.2</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+}
+
+.heading-2 {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${Math.max(500, parseInt(this.fontWeight.value))}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 2}px</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">1.3</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+}
+
+.heading-3 {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${Math.max(500, parseInt(this.fontWeight.value))}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 1.5}px</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">1.4</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+}
+
+.body-text {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${styles.fontWeight}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${styles.fontSize}</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">${styles.lineHeight}</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">word-spacing</span>: <span class="css-value">${styles.wordSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+    <span class="css-property">text-align</span>: <span class="css-value">${styles.textAlign}</span>;
+}
+
+.small-text {
+    <span class="css-property">font-family</span>: <span class="css-value">${styles.fontFamily}</span>;
+    <span class="css-property">font-weight</span>: <span class="css-value">${styles.fontWeight}</span>;
+    <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 0.85}px</span>;
+    <span class="css-property">line-height</span>: <span class="css-value">${styles.lineHeight}</span>;
+    <span class="css-property">letter-spacing</span>: <span class="css-value">${styles.letterSpacing}</span>;
+    <span class="css-property">color</span>: <span class="css-value">${styles.color}</span>;
+    <span class="css-property">opacity</span>: <span class="css-value">0.8</span>;
+}
+
+<span class="css-comment">/* Responsive Typography */</span>
+@media (max-width: 768px) {
+    .heading-1 {
+        <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 2}px</span>;
+    }
+    
+    .heading-2 {
+        <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 1.6}px</span>;
+    }
+    
+    .heading-3 {
+        <span class="css-property">font-size</span>: <span class="css-value">${parseInt(this.fontSize.value) * 1.3}px</span>;
+    }
+}`;
+
+                this.cssOutput.innerHTML = css;
+            }
+
+            switchTab(tabName) {
+                // Update tab buttons
+                this.tabButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabName);
+                });
+
+                // Update preview sections
+                this.previewSections.forEach(section => {
+                    section.classList.toggle('active', section.id === tabName);
+                });
+            }
+
+            resetToDefaults() {
+                // Reset form controls to defaults
+                this.fontFamily.value = 'Inter';
+                this.fontWeight.value = '400';
+                this.fontSize.value = '16';
+                this.lineHeight.value = '1.6';
+                this.letterSpacing.value = '0';
+                this.wordSpacing.value = '0';
+                this.textColor.value = '#ffffff';
+                this.italic.checked = false;
+                this.underline.checked = false;
+                this.uppercase.checked = false;
+                this.textAlign.value = 'left';
+
+                // Reset editable text
+                this.editableText.value = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.
+
+Typography plays a crucial role in graphic design, web design, and user interface design. Good typography enhances readability, establishes visual hierarchy, and creates a strong first impression. It communicates tone and mood while supporting the overall design aesthetic.
+
+Modern typography has evolved significantly with digital technologies, offering designers unprecedented control over letterforms, spacing, and layout. From traditional serif fonts to contemporary sans-serif designs, each typeface tells a story and serves a specific purpose in visual communication.`;
+
+                // Update preview
+                this.updatePreview();
+
+                // Show success feedback
+                this.showNotification('Typography settings reset to defaults', 'success');
+            }
+
+            exportCSS() {
+                const styles = this.generateStyles();
+                const cssContent = `/* Generated Typography Styles */
+.typography-element {
+    font-family: ${styles.fontFamily};
+    font-weight: ${styles.fontWeight};
+    font-size: ${styles.fontSize};
+    line-height: ${styles.lineHeight};
+    letter-spacing: ${styles.letterSpacing};
+    word-spacing: ${styles.wordSpacing};
+    color: ${styles.color};
+    font-style: ${styles.fontStyle};
+    text-decoration: ${styles.textDecoration};
+    text-transform: ${styles.textTransform};
+    text-align: ${styles.textAlign};
+}
+
+/* Typography Scale */
+.heading-1 {
+    font-family: ${styles.fontFamily};
+    font-weight: ${Math.max(600, parseInt(this.fontWeight.value))};
+    font-size: ${parseInt(this.fontSize.value) * 2.5}px;
+    line-height: 1.2;
+    letter-spacing: ${styles.letterSpacing};
+    color: ${styles.color};
+}
+
+.heading-2 {
+    font-family: ${styles.fontFamily};
+    font-weight: ${Math.max(500, parseInt(this.fontWeight.value))};
+    font-size: ${parseInt(this.fontSize.value) * 2}px;
+    line-height: 1.3;
+    letter-spacing: ${styles.letterSpacing};
+    color: ${styles.color};
+}
+
+.heading-3 {
+    font-family: ${styles.fontFamily};
+    font-weight: ${Math.max(500, parseInt(this.fontWeight.value))};
+    font-size: ${parseInt(this.fontSize.value) * 1.5}px;
+    line-height: 1.4;
+    letter-spacing: ${styles.letterSpacing};
+    color: ${styles.color};
+}
+
+.body-text {
+    font-family: ${styles.fontFamily};
+    font-weight: ${styles.fontWeight};
+    font-size: ${styles.fontSize};
+    line-height: ${styles.lineHeight};
+    letter-spacing: ${styles.letterSpacing};
+    word-spacing: ${styles.wordSpacing};
+    color: ${styles.color};
+    text-align: ${styles.textAlign};
+}
+
+.small-text {
+    font-family: ${styles.fontFamily};
+    font-weight: ${styles.fontWeight};
+    font-size: ${parseInt(this.fontSize.value) * 0.85}px;
+    line-height: ${styles.lineHeight};
+    letter-spacing: ${styles.letterSpacing};
+    color: ${styles.color};
+    opacity: 0.8;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    .heading-1 {
+        font-size: ${parseInt(this.fontSize.value) * 2}px;
+    }
+    
+    .heading-2 {
+        font-size: ${parseInt(this.fontSize.value) * 1.6}px;
+    }
+    
+    .heading-3 {
+        font-size: ${parseInt(this.fontSize.value) * 1.3}px;
+    }
+}`;
+
+                // Create and download file
+                const blob = new Blob([cssContent], { type: 'text/css' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'typography-styles.css';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // Show success feedback
+                this.showNotification('CSS exported successfully!', 'success');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success-color)' : 'var(--accent-color)'};
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    z-index: 10000;
+                    animation: slideInRight 0.3s ease;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                `;
+                notification.textContent = message;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease forwards';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+        }
+
+        // Add notification animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new TypographyPlayground();
+        });
+    </script>
+</body>
+</html>
