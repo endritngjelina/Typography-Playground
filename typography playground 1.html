@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Playground Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@100;300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Code+Pro:wght@200..900&family=Montserrat:wght@100..900&family=Lora:wght@400;500;600;700&family=Open+Sans:wght@300..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0078d4;
+            --primary-dark: #106ebe;
+            --secondary: #00bcf2;
+            --accent: #8764b8;
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-dark: #1e1e1e;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border: #e1dfdd;
+            --border-focus: #0078d4;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 120px);
+        }
+
+        .controls-panel {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            height: fit-content;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 120px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .control-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: var(--bg-secondary);
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+        }
+
+        .range-input {
+            -webkit-appearance: none;
+            background: var(--border);
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 4px var(--shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .range-input::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .range-value {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--primary);
+            background: rgba(0, 120, 212, 0.05);
+        }
+
+        .checkbox-item input {
+            margin: 0;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .preset-btn {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 120, 212, 0.05);
+        }
+
+        .preview-area {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .preview-tabs {
+            display: flex;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 0.25rem;
+            gap: 0.25rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-secondary);
+            color: var(--primary);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .preview-content {
+            flex: 1;
+            min-height: 400px;
+        }
+
+        .preview-text {
+            transition: all 0.3s ease;
+            user-select: text;
+        }
+
+        .sample-content {
+            display: none;
+        }
+
+        .sample-content.active {
+            display: block;
+        }
+
+        .editable-text {
+            border: 1px dashed transparent;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            min-height: 2em;
+        }
+
+        .editable-text:hover {
+            border-color: var(--border);
+            background: rgba(0, 120, 212, 0.02);
+        }
+
+        .editable-text:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 120, 212, 0.05);
+        }
+
+        .css-output {
+            background: var(--bg-dark);
+            color: #e6e6e6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .css-property {
+            color: #9cdcfe;
+        }
+
+        .css-value {
+            color: #ce9178;
+        }
+
+        .css-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .export-section {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .dark-mode {
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #e6e6e6;
+            --text-secondary: #b3b3b3;
+            --border: #404040;
+        }
+
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .controls-panel {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+            }
+
+            .main-container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .preview-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .export-section {
+                justify-content: center;
+            }
+
+            .preset-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 120, 212, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 120, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 120, 212, 0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-font"></i>
+                <span>Typography Playground Pro</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="toggleDarkMode()">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+                <button class="btn btn-primary" onclick="exportCSS()">
+                    <i class="fas fa-download"></i>
+                    <span>Export CSS</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="controls-panel fade-in">
+            <div class="panel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-font"></i>
+                    Font Properties
+                </h3>
+                <div class="control-group">
+                    <label class="control-label">Font Family</label>
+                    <select class="control-input" id="fontFamily">
+                        <option value="Inter">Inter</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Playfair Display">Playfair Display</option>
+                        <option value="Source Code Pro">Source Code Pro</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Lora">Lora</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Poppins">Poppins</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Font Size</label>
+                    <input type="range" class="control-input range-input" id="fontSize" min="8" max="72" value="16">
+                    <span class="range-value" id="fontSizeValue">16px</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Font Weight</label>
+                    <select class="control-input" id="fontWeight">
+                        <option value="100">Thin (100)</option>
+                        <option value="200">Extra Light (200)</option>
+                        <option value="300">Light (300)</option>
+                        <option value="400" selected>Regular (400)</option>
+                        <option value="500">Medium (500)</option>
+                        <option value="600">Semi Bold (600)</option>
+                        <option value="700">Bold (700)</option>
+                        <option value="800">Extra Bold (800)</option>
+                        <option value="900">Black (900)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Font Style</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="fontItalic">
+                            <span>Italic</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-text-height"></i>
+                    Spacing & Layout
+                </h3>
+                <div class="control-group">
+                    <label class="control-label">Line Height</label>
+                    <input type="range" class="control-input range-input" id="lineHeight" min="0.8" max="3" step="0.1" value="1.5">
+                    <span class="range-value" id="lineHeightValue">1.5</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Letter Spacing</label>
+                    <input type="range" class="control-input range-input" id="letterSpacing" min="-2" max="5" step="0.1" value="0">
+                    <span class="range-value" id="letterSpacingValue">0px</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Word Spacing</label>
+                    <input type="range" class="control-input range-input" id="wordSpacing" min="-5" max="10" step="0.5" value="0">
+                    <span class="range-value" id="wordSpacingValue">0px</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Text Indent</label>
+                    <input type="range" class="control-input range-input" id="textIndent" min="0" max="50" value="0">
+                    <span class="range-value" id="textIndentValue">0px</span>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-align-left"></i>
+                    Text Properties
+                </h3>
+                <div class="control-group">
+                    <label class="control-label">Text Align</label>
+                    <select class="control-input" id="textAlign">
+                        <option value="left">Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                        <option value="justify">Justify</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Text Transform</label>
+                    <select class="control-input" id="textTransform">
+                        <option value="none">None</option>
+                        <option value="uppercase">UPPERCASE</option>
+                        <option value="lowercase">lowercase</option>
+                        <option value="capitalize">Capitalize</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Text Decoration</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="underline">
+                            <span>Underline</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="strikethrough">
+                            <span>Strike</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-palette"></i>
+                    Colors & Effects
+                </h3>
+                <div class="control-group">
+                    <label class="control-label">Text Color</label>
+                    <input type="color" class="color-input" id="textColor" value="#323130">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Background Color</label>
+                    <input type="color" class="color-input" id="backgroundColor" value="#ffffff">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Text Shadow</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="textShadow">
+                            <span>Enable Shadow</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-magic"></i>
+                    Quick Presets
+                </h3>
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="applyPreset('modern')">Modern</button>
+                    <button class="preset-btn" onclick="applyPreset('classic')">Classic</button>
+                    <button class="preset-btn" onclick="applyPreset('minimal')">Minimal</button>
+                    <button class="preset-btn" onclick="applyPreset('editorial')">Editorial</button>
+                    <button class="preset-btn" onclick="applyPreset('code')">Code</button>
+                    <button class="preset-btn" onclick="applyPreset('display')">Display</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-area fade-in">
+            <div class="preview-header">
+                <div class="preview-tabs">
+                    <button class="tab-btn active" onclick="switchTab('paragraph')">Paragraph</button>
+                    <button class="tab-btn" onclick="switchTab('headings')">Headings</button>
+                    <button class="tab-btn" onclick="switchTab('custom')">Custom</button>
+                    <button class="tab-btn" onclick="switchTab('css')">CSS Output</button>
+                </div>
+            </div>
+
+            <div class="preview-content">
+                <div class="sample-content active" id="paragraph">
+                    <div class="editable-text preview-text" contenteditable="true" id="sampleParagraph">
+                        Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing (leading), and letter-spacing (tracking), and adjusting the space between pairs of letters (kerning).
+                        
+                        Good typography is invisible to the reader, allowing them to focus on the content rather than the presentation. It creates hierarchy, guides the eye, and enhances the reading experience through careful consideration of contrast, repetition, alignment, and proximity.
+                        
+                        Modern web typography has evolved significantly with the introduction of web fonts, variable fonts, and advanced CSS properties that give designers unprecedented control over text rendering and appearance.
+                    </div>
+                </div>
+
+                <div class="sample-content" id="headings">
+                    <h1 class="preview-text" contenteditable="true">Main Heading (H1)</h1>
+                    <h2 class="preview-text" contenteditable="true">Secondary Heading (H2)</h2>
+                    <h3 class="preview-text" contenteditable="true">Tertiary Heading (H3)</h3>
+                    <h4 class="preview-text" contenteditable="true">Quaternary Heading (H4)</h4>
+                    <h5 class="preview-text" contenteditable="true">Quinary Heading (H5)</h5>
+                    <h6 class="preview-text" contenteditable="true">Senary Heading (H6)</h6>
+                </div>
+
+                <div class="sample-content" id="custom">
+                    <div class="editable-text preview-text" contenteditable="true" id="customText">
+                        Enter your own text here to see how it looks with your typography settings. You can type anything you want to test different content types and lengths.
+                        
+                        Try different scenarios: short phrases, long paragraphs, numbers (123456), special characters (!@#$%^&*), and various punctuation marks to see how your chosen typography handles different content.
+                    </div>
+                </div>
+
+                <div class="sample-content" id="css">
+                    <div class="css-output" id="cssOutput">
+                        /* Generated CSS will appear here */
+                    </div>
+                    <div class="export-section">
+                        <button class="btn btn-primary" onclick="copyCSS()">
+                            <i class="fas fa-copy"></i>
+                            Copy CSS
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadCSS()">
+                            <i class="fas fa-download"></i>
+                            Download CSS
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareSettings()">
+                            <i class="fas fa-share"></i>
+                            Share Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Typography settings object
+        const settings = {
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: 400,
+            fontStyle: 'normal',
+            lineHeight: 1.5,
+            letterSpacing: 0,
+            wordSpacing: 0,
+            textIndent: 0,
+            textAlign: 'left',
+            textTransform: 'none',
+            textDecoration: 'none',
+            textColor: '#323130',
+            backgroundColor: '#ffffff',
+            textShadow: false
+        };
+
+        // Typography presets
+        const presets = {
+            modern: {
+                fontFamily: 'Inter',
+                fontSize: 18,
+                fontWeight: 400,
+                lineHeight: 1.6,
+                letterSpacing: -0.2,
+                wordSpacing: 0,
+                textAlign: 'left'
+            },
+            classic: {
+                fontFamily: 'Lora',
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: 1.7,
+                letterSpacing: 0.2,
+                wordSpacing: 0.5,
+                textAlign: 'justify'
+            },
+            minimal: {
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                fontWeight: 300,
+                lineHeight: 1.8,
+                letterSpacing: 0.5,
+                wordSpacing: 0,
+                textAlign: 'left'
+            },
+            editorial: {
+                fontFamily: 'Playfair Display',
+                fontSize: 20,
+                fontWeight: 400,
+                lineHeight: 1.5,
+                letterSpacing: 0,
+                wordSpacing: 0,
+                textAlign: 'left'
+            },
+            code: {
+                fontFamily: 'Source Code Pro',
+                fontSize: 14,
+                fontWeight: 400,
+                lineHeight: 1.6,
+                letterSpacing: 0,
+                wordSpacing: 0,
+                textAlign: 'left'
+            },
+            display: {
+                fontFamily: 'Montserrat',
+                fontSize: 32,
+                fontWeight: 700,
+                lineHeight: 1.2,
+                letterSpacing: -0.5,
+                wordSpacing: 0,
+                textAlign: 'center'
+            }
+        };
+
+        // Initialize controls
+        function initControls() {
+            // Font controls
+            document.getElementById('fontFamily').addEventListener('change', updateTypography);
+            document.getElementById('fontSize').addEventListener('input', updateTypography);
+            document.getElementById('fontWeight').addEventListener('change', updateTypography);
+            document.getElementById('fontItalic').addEventListener('change', updateTypography);
+
+            // Spacing controls
+            document.getElementById('lineHeight').addEventListener('input', updateTypography);
+            document.getElementById('letterSpacing').addEventListener('input', updateTypography);
+            document.getElementById('wordSpacing').addEventListener('input', updateTypography);
+            document.getElementById('textIndent').addEventListener('input', updateTypography);
+
+            // Text property controls
+            document.getElementById('textAlign').addEventListener('change', updateTypography);
+            document.getElementById('textTransform').addEventListener('change', updateTypography);
+            document.getElementById('underline').addEventListener('change', updateTypography);
+            document.getElementById('strikethrough').addEventListener('change', updateTypography);
+
+            // Color and effect controls
+            document.getElementById('textColor').addEventListener('input', updateTypography);
+            document.getElementById('backgroundColor').addEventListener('input', updateTypography);
+            document.getElementById('textShadow').addEventListener('change', updateTypography);
+
+            // Initialize display
+            updateRangeDisplays();
+            updateTypography();
+        }
+
+        // Update range input displays
+        function updateRangeDisplays() {
+            const ranges = [
+                { id: 'fontSize', suffix: 'px' },
+                { id: 'lineHeight', suffix: '' },
+                { id: 'letterSpacing', suffix: 'px' },
+                { id: 'wordSpacing', suffix: 'px' },
+                { id: 'textIndent', suffix: 'px' }
+            ];
+
+            ranges.forEach(range => {
+                const input = document.getElementById(range.id);
+                const display = document.getElementById(range.id + 'Value');
+                
+                input.addEventListener('input', () => {
+                    display.textContent = input.value + range.suffix;
+                });
+                
+                // Set initial value
+                display.textContent = input.value + range.suffix;
+            });
+        }
+
+        // Update typography based on current settings
+        function updateTypography() {
+            // Collect current settings
+            settings.fontFamily = document.getElementById('fontFamily').value;
+            settings.fontSize = parseFloat(document.getElementById('fontSize').value);
+            settings.fontWeight = document.getElementById('fontWeight').value;
+            settings.fontStyle = document.getElementById('fontItalic').checked ? 'italic' : 'normal';
+            settings.lineHeight = parseFloat(document.getElementById('lineHeight').value);
+            settings.letterSpacing = parseFloat(document.getElementById('letterSpacing').value);
+            settings.wordSpacing = parseFloat(document.getElementById('wordSpacing').value);
+            settings.textIndent = parseFloat(document.getElementById('textIndent').value);
+            settings.textAlign = document.getElementById('textAlign').value;
+            settings.textTransform = document.getElementById('textTransform').value;
+            settings.textColor = document.getElementById('textColor').value;
+            settings.backgroundColor = document.getElementById('backgroundColor').value;
+            settings.textShadow = document.getElementById('textShadow').checked;
+
+            // Build text decoration
+            let textDecoration = 'none';
+            const decorations = [];
+            if (document.getElementById('underline').checked) decorations.push('underline');
+            if (document.getElementById('strikethrough').checked) decorations.push('line-through');
+            if (decorations.length > 0) textDecoration = decorations.join(' ');
+            settings.textDecoration = textDecoration;
+
+            // Apply styles to preview elements
+            const previewElements = document.querySelectorAll('.preview-text');
+            previewElements.forEach(element => {
+                applyStylesToElement(element);
+            });
+
+            // Update background
+            const previewArea = document.querySelector('.preview-area');
+            previewArea.style.backgroundColor = settings.backgroundColor;
+
+            // Update CSS output
+            updateCSSOutput();
+        }
+
+        // Apply styles to a specific element
+        function applyStylesToElement(element) {
+            element.style.fontFamily = `'${settings.fontFamily}', sans-serif`;
+            element.style.fontSize = settings.fontSize + 'px';
+            element.style.fontWeight = settings.fontWeight;
+            element.style.fontStyle = settings.fontStyle;
+            element.style.lineHeight = settings.lineHeight;
+            element.style.letterSpacing = settings.letterSpacing + 'px';
+            element.style.wordSpacing = settings.wordSpacing + 'px';
+            element.style.textIndent = settings.textIndent + 'px';
+            element.style.textAlign = settings.textAlign;
+            element.style.textTransform = settings.textTransform;
+            element.style.textDecoration = settings.textDecoration;
+            element.style.color = settings.textColor;
+            
+            if (settings.textShadow) {
+                element.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.3)';
+            } else {
+                element.style.textShadow = 'none';
+            }
+        }
+
+        // Update CSS output display
+        function updateCSSOutput() {
+            const cssOutput = document.getElementById('cssOutput');
+            const css = generateCSS();
+            cssOutput.innerHTML = syntaxHighlightCSS(css);
+        }
+
+        // Generate CSS from current settings
+        function generateCSS() {
+            let css = `/* Generated Typography CSS */\n`;
+            css += `.typography-style {\n`;
+            css += `    font-family: '${settings.fontFamily}', sans-serif;\n`;
+            css += `    font-size: ${settings.fontSize}px;\n`;
+            css += `    font-weight: ${settings.fontWeight};\n`;
+            css += `    font-style: ${settings.fontStyle};\n`;
+            css += `    line-height: ${settings.lineHeight};\n`;
+            
+            if (settings.letterSpacing !== 0) {
+                css += `    letter-spacing: ${settings.letterSpacing}px;\n`;
+            }
+            if (settings.wordSpacing !== 0) {
+                css += `    word-spacing: ${settings.wordSpacing}px;\n`;
+            }
+            if (settings.textIndent !== 0) {
+                css += `    text-indent: ${settings.textIndent}px;\n`;
+            }
+            
+            css += `    text-align: ${settings.textAlign};\n`;
+            
+            if (settings.textTransform !== 'none') {
+                css += `    text-transform: ${settings.textTransform};\n`;
+            }
+            if (settings.textDecoration !== 'none') {
+                css += `    text-decoration: ${settings.textDecoration};\n`;
+            }
+            
+            css += `    color: ${settings.textColor};\n`;
+            css += `    background-color: ${settings.backgroundColor};\n`;
+            
+            if (settings.textShadow) {
+                css += `    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);\n`;
+            }
+            
+            css += `}\n\n`;
+            
+            // Add responsive variations
+            css += `/* Responsive Typography */\n`;
+            css += `@media (max-width: 768px) {\n`;
+            css += `    .typography-style {\n`;
+            css += `        font-size: ${Math.max(14, settings.fontSize - 2)}px;\n`;
+            css += `        line-height: ${Math.max(1.3, settings.lineHeight - 0.1)};\n`;
+            css += `    }\n`;
+            css += `}\n`;
+            
+            return css;
+        }
+
+        // Syntax highlight CSS
+        function syntaxHighlightCSS(css) {
+            return css
+                .replace(/\/\*.*?\*\//g, '<span class="css-comment">            // Initialize display</span>')
+                .replace(/([a-zA-Z-]+)(?=\s*:)/g, '<span class="css-property">$1</span>')
+                .replace(/:\s*([^;]+)/g, ': <span class="css-value">$1</span>');
+        }
+
+        // Apply typography preset
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            if (!preset) return;
+
+            // Update controls
+            Object.keys(preset).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = preset[key];
+                    if (element.type === 'range') {
+                        document.getElementById(key + 'Value').textContent = preset[key] + 
+                            (key === 'lineHeight' ? '' : 'px');
+                    }
+                }
+            });
+
+            // Update typography
+            updateTypography();
+            
+            // Show feedback
+            showToast(`Applied ${presetName} preset!`);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.sample-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            const button = event.target.closest('.btn');
+            button.querySelector('span').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+            button.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            
+            showToast(`Switched to ${isDark ? 'dark' : 'light'} mode!`);
+        }
+
+        // Copy CSS to clipboard
+        async function copyCSS() {
+            const css = generateCSS();
+            try {
+                await navigator.clipboard.writeText(css);
+                showToast('CSS copied to clipboard!');
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = css;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('CSS copied to clipboard!');
+            }
+        }
+
+        // Download CSS file
+        function downloadCSS() {
+            const css = generateCSS();
+            const blob = new Blob([css], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'typography-styles.css';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('CSS file downloaded!');
+        }
+
+        // Export CSS (main function)
+        function exportCSS() {
+            copyCSS();
+        }
+
+        // Share settings (creates URL with settings)
+        function shareSettings() {
+            const params = new URLSearchParams();
+            Object.keys(settings).forEach(key => {
+                params.set(key, settings[key]);
+            });
+            
+            const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+            
+            try {
+                navigator.clipboard.writeText(shareUrl);
+                showToast('Share URL copied to clipboard!');
+            } catch (err) {
+                showToast('Settings encoded in URL - copy from address bar');
+                window.history.replaceState({}, '', shareUrl);
+            }
+        }
+
+        // Load settings from URL parameters
+        function loadSettingsFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            let hasParams = false;
+            
+            Object.keys(settings).forEach(key => {
+                if (params.has(key)) {
+                    hasParams = true;
+                    const value = params.get(key);
+                    const element = document.getElementById(key);
+                    
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = value === 'true';
+                        } else if (element.type === 'color') {
+                            element.value = value;
+                        } else {
+                            element.value = value;
+                        }
+                    }
+                }
+            });
+            
+            if (hasParams) {
+                updateTypography();
+                showToast('Settings loaded from URL!');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Real-time text editing
+        function setupTextEditing() {
+            const editableElements = document.querySelectorAll('.editable-text');
+            
+            editableElements.forEach(element => {
+                element.addEventListener('input', () => {
+                    // Apply current styles to maintain formatting
+                    applyStylesToElement(element);
+                });
+                
+                element.addEventListener('paste', (e) => {
+                    // Clean pasted content
+                    e.preventDefault();
+                    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                    document.execCommand('insertText', false, text);
+                });
+            });
+        }
+
+        // Advanced features
+        function setupAdvancedFeatures() {
+            // Font loading detection
+            if ('fonts' in document) {
+                document.fonts.ready.then(() => {
+                    updateTypography();
+                });
+            }
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case 's':
+                            e.preventDefault();
+                            downloadCSS();
+                            break;
+                        case 'c':
+                            if (e.shiftKey) {
+                                e.preventDefault();
+                                copyCSS();
+                            }
+                            break;
+                        case 'd':
+                            e.preventDefault();
+                            toggleDarkMode();
+                            break;
+                    }
+                }
+            });
+            
+            // Auto-save settings to sessionStorage
+            const autoSave = () => {
+                const currentSettings = {};
+                Object.keys(settings).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        currentSettings[key] = element.type === 'checkbox' ? element.checked : element.value;
+                    }
+                });
+                try {
+                    sessionStorage.setItem('typographySettings', JSON.stringify(currentSettings));
+                } catch (e) {
+                    // Silently handle storage errors
+                }
+            };
+            
+            // Load saved settings
+            try {
+                const saved = sessionStorage.getItem('typographySettings');
+                if (saved) {
+                    const savedSettings = JSON.parse(saved);
+                    Object.keys(savedSettings).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                element.checked = savedSettings[key];
+                            } else {
+                                element.value = savedSettings[key];
+                            }
+                        }
+                    });
+                }
+            } catch (e) {
+                // Silently handle storage errors
+            }
+            
+            // Set up auto-save on changes
+            document.addEventListener('change', autoSave);
+            document.addEventListener('input', autoSave);
+        }
+
+        // Performance optimization
+        function optimizePerformance() {
+            // Debounce typography updates
+            let updateTimeout;
+            const originalUpdate = updateTypography;
+            
+            updateTypography = function() {
+                clearTimeout(updateTimeout);
+                updateTimeout = setTimeout(originalUpdate, 100);
+            };
+            
+            // Lazy load font variants
+            const fontSelect = document.getElementById('fontFamily');
+            fontSelect.addEventListener('change', () => {
+                const selectedFont = fontSelect.value;
+                const link = document.createElement('link');
+                link.href = `https://fonts.googleapis.com/css2?family=${selectedFont}:wght@100..900&display=swap`;
+                link.rel = 'stylesheet';
+                document.head.appendChild(link);
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupTextEditing();
+            setupAdvancedFeatures();
+            optimizePerformance();
+            loadSettingsFromURL();
+            
+            // Add welcome message
+            setTimeout(() => {
+                showToast('Welcome to Typography Playground Pro! 🎨');
+            }, 1000);
+        });
+
+        // Add some professional touches
+        function addProfessionalTouches() {
+            // Add smooth scrolling
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Add focus management for accessibility
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-nav');
+                }
+            });
+            
+            document.addEventListener('mousedown', () => {
+                document.body.classList.remove('keyboard-nav');
+            });
+            
+            // Add loading states for async operations
+            const asyncButtons = document.querySelectorAll('[onclick*="CSS"], [onclick*="share"]');
+            asyncButtons.forEach(button => {
+                const originalOnclick = button.onclick;
+                button.addEventListener('click', () => {
+                    button.classList.add('pulse');
+                    setTimeout(() => {
+                        button.classList.remove('pulse');
+                    }, 2000);
+                });
+            });
+        }
+
+        // Call professional touches
+        document.addEventListener('DOMContentLoaded', addProfessionalTouches);
+    </script>
+</body>
+</html>
