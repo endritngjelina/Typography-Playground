@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Playground - Professional Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700;900&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1877f2;
+            --primary-dark: #166fe5;
+            --secondary: #42b883;
+            --accent: #ff6b6b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #1c1e21;
+            --text-secondary: #65676b;
+            --text-muted: #8a8d91;
+            --border: #dadde1;
+            --border-light: #f0f2f5;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #18191a;
+            --bg-secondary: #242526;
+            --bg-tertiary: #3a3b3c;
+            --text-primary: #e4e6ea;
+            --text-secondary: #b0b3b8;
+            --text-muted: #8a8d91;
+            --border: #3e4042;
+            --border-light: #3e4042;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .app-header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            max-width: 1800px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+        }
+
+        .panel {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            height: fit-content;
+        }
+
+        .panel-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel-content {
+            padding: 1.25rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--bg-tertiary);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .slider-value {
+            min-width: 45px;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .preview-area {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        #sample-text {
+            transition: all 0.3s ease;
+            outline: none;
+            border: 2px dashed transparent;
+            padding: 1rem;
+            border-radius: var(--radius);
+        }
+
+        #sample-text:focus {
+            border-color: var(--primary);
+            background: var(--bg-secondary);
+        }
+
+        .sample-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sample-btn {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .sample-btn:hover, .sample-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .stats-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stats-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .css-output {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: var(--text-secondary);
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .color-picker-group {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tab {
+            padding: 0.75rem 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.25rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .preset-btn {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .comparison-mode {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .comparison-mode.active {
+            display: grid;
+        }
+
+        .comparison-panel {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .export-formats {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .format-btn {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .format-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 280px 1fr;
+                padding: 1rem;
+            }
+            
+            .info-panel {
+                grid-column: 1 / -1;
+                grid-row: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .app-header {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        .advanced-controls {
+            display: none;
+        }
+
+        .advanced-controls.show {
+            display: block;
+        }
+
+        .toggle-advanced {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .accessibility-info {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .accessibility-score {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-excellent { color: #28a745; }
+        .score-good { color: #ffc107; }
+        .score-poor { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <i class="fas fa-font"></i>
+            Typography Playground
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" id="comparison-toggle">
+                <i class="fas fa-columns"></i>
+                Compare
+            </button>
+            <button class="btn btn-primary" id="export-btn">
+                <i class="fas fa-download"></i>
+                Export CSS
+            </button>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Controls Panel -->
+        <div class="panel">
+            <div class="tabs">
+                <button class="tab active" data-tab="typography">Typography</button>
+                <button class="tab" data-tab="presets">Presets</button>
+            </div>
+            
+            <div class="tab-content active" id="typography-tab">
+                <div class="control-group">
+                    <label class="control-label">Font Family</label>
+                    <select class="control" id="font-family">
+                        <option value="Inter">Inter</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Lato">Lato</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Playfair Display">Playfair Display</option>
+                        <option value="Merriweather">Merriweather</option>
+                        <option value="Source Sans Pro">Source Sans Pro</option>
+                        <option value="Nunito">Nunito</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Font Weight</label>
+                    <div class="slider-group">
+                        <input type="range" class="slider" id="font-weight" min="100" max="900" step="100" value="400">
+                        <span class="slider-value" id="font-weight-value">400</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Font Size (px)</label>
+                    <div class="slider-group">
+                        <input type="range" class="slider" id="font-size" min="8" max="120" value="16">
+                        <span class="slider-value" id="font-size-value">16px</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Line Height</label>
+                    <div class="slider-group">
+                        <input type="range" class="slider" id="line-height" min="1" max="3" step="0.1" value="1.6">
+                        <span class="slider-value" id="line-height-value">1.6</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Letter Spacing (px)</label>
+                    <div class="slider-group">
+                        <input type="range" class="slider" id="letter-spacing" min="-2" max="10" step="0.1" value="0">
+                        <span class="slider-value" id="letter-spacing-value">0px</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Text Color</label>
+                    <div class="color-picker-group">
+                        <input type="text" class="control" id="text-color-input" value="#1c1e21">
+                        <input type="color" class="color-picker" id="text-color" value="#1c1e21">
+                    </div>
+                </div>
+
+                <button class="toggle-advanced" id="toggle-advanced">
+                    <i class="fas fa-chevron-down"></i>
+                    Advanced Controls
+                </button>
+
+                <div class="advanced-controls" id="advanced-controls">
+                    <div class="control-group">
+                        <label class="control-label">Word Spacing (px)</label>
+                        <div class="slider-group">
+                            <input type="range" class="slider" id="word-spacing" min="-5" max="20" step="0.5" value="0">
+                            <span class="slider-value" id="word-spacing-value">0px</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Text Transform</label>
+                        <select class="control" id="text-transform">
+                            <option value="none">None</option>
+                            <option value="uppercase">UPPERCASE</option>
+                            <option value="lowercase">lowercase</option>
+                            <option value="capitalize">Capitalize</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Text Decoration</label>
+                        <select class="control" id="text-decoration">
+                            <option value="none">None</option>
+                            <option value="underline">Underline</option>
+                            <option value="overline">Overline</option>
+                            <option value="line-through">Strike Through</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Font Style</label>
+                        <select class="control" id="font-style">
+                            <option value="normal">Normal</option>
+                            <option value="italic">Italic</option>
+                            <option value="oblique">Oblique</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="presets-tab">
+                <div class="presets-grid">
+                    <button class="preset-btn" data-preset="heading">
+                        <div style="font-weight: 700; font-size: 1.2em;">Heading</div>
+                        <small>Bold & Large</small>
+                    </button>
+                    <button class="preset-btn" data-preset="body">
+                        <div style="font-weight: 400;">Body Text</div>
+                        <small>Readable</small>
+                    </button>
+                    <button class="preset-btn" data-preset="caption">
+                        <div style="font-size: 0.8em; opacity: 0.8;">Caption</div>
+                        <small>Small & Light</small>
+                    </button>
+                    <button class="preset-btn" data-preset="display">
+                        <div style="font-weight: 900; font-size: 1.4em;">Display</div>
+                        <small>Extra Bold</small>
+                    </button>
+                    <button class="preset-btn" data-preset="monospace">
+                        <div style="font-family: monospace;">Code</div>
+                        <small>Monospace</small>
+                    </button>
+                    <button class="preset-btn" data-preset="elegant">
+                        <div style="font-family: serif; font-style: italic;">Elegant</div>
+                        <small>Serif Italic</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Area -->
+        <div class="preview-area">
+            <div class="preview-header">
+                <div class="preview-title">
+                    <i class="fas fa-eye"></i>
+                    Live Preview
+                </div>
+                <div class="sample-selector">
+                    <button class="sample-btn active" data-sample="paragraph">Paragraph</button>
+                    <button class="sample-btn" data-sample="heading">Heading</button>
+                    <button class="sample-btn" data-sample="list">List</button>
+                    <button class="sample-btn" data-sample="quote">Quote</button>
+                    <button class="sample-btn" data-sample="mixed">Mixed</button>
+                </div>
+            </div>
+            <div class="preview-content">
+                <div id="comparison-mode" class="comparison-mode">
+                    <div class="comparison-panel">
+                        <h4>Original</h4>
+                        <div id="original-text"></div>
+                    </div>
+                    <div class="comparison-panel">
+                        <h4>Modified</h4>
+                        <div id="modified-text"></div>
+                    </div>
+                </div>
+                <div id="sample-text" contenteditable="true">
+                    The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once, making it perfect for testing typography. Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
+
+                    Good typography enhances the user experience by improving readability and establishing visual hierarchy. It involves careful consideration of font choice, spacing, alignment, and color to create harmonious and effective communication.
+
+                    Whether you're designing for web, print, or mobile interfaces, understanding typography fundamentals will elevate your design work and create more engaging user experiences.
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-chart-line"></i>
+                    Typography Stats
+                </div>
+                <div class="panel-content">
+                    <div class="stats-card">
+                        <div class="stats-value" id="character-count">0</div>
+                        <div class="stats-label">Characters</div>
+                    </div>
+                    
+                    <div class="accessibility-info">
+                        <div class="accessibility-score" id="accessibility-score">Accessibility: Excellent</div>
+                        <div id="accessibility-details">
+                            ✓ Good contrast ratio<br>
+                            ✓ Readable font size<br>
+                            ✓ Adequate line spacing
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <i class="fas fa-code"></i>
+                    Generated CSS
+                </div>
+                <div class="panel-content">
+                    <div class="export-formats">
+                        <button class="format-btn active" data-format="css">CSS</button>
+                        <button class="format-btn" data-format="scss">SCSS</button>
+                        <button class="format-btn" data-format="json">JSON</button>
+                    </div>
+                    <div class="css-output" id="css-output"></div>
+                    <button class="btn btn-secondary" id="copy-css" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-copy"></i>
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        class TypographyPlayground {
+            constructor() {
+                this.initElements();
+                this.initEventListeners();
+                this.initSampleTexts();
+                this.initPresets();
+                this.updatePreview();
+                this.updateStats();
+                this.updateCSS();
+                this.initTheme();
+            }
+
+            initElements() {
+                this.sampleText = document.getElementById('sample-text');
+                this.controls = {
+                    fontFamily: document.getElementById('font-family'),
+                    fontWeight: document.getElementById('font-weight'),
+                    fontSize: document.getElementById('font-size'),
+                    lineHeight: document.getElementById('line-height'),
+                    letterSpacing: document.getElementById('letter-spacing'),
+                    wordSpacing: document.getElementById('word-spacing'),
+                    textColor: document.getElementById('text-color'),
+                    textColorInput: document.getElementById('text-color-input'),
+                    textTransform: document.getElementById('text-transform'),
+                    textDecoration: document.getElementById('text-decoration'),
+                    fontStyle: document.getElementById('font-style')
+                };
+                this.cssOutput = document.getElementById('css-output');
+                this.notification = document.getElementById('notification');
+                this.characterCount = document.getElementById('character-count');
+                this.accessibilityScore = document.getElementById('accessibility-score');
+                this.accessibilityDetails = document.getElementById('accessibility-details');
+            }
+
+            initEventListeners() {
+                // Control listeners
+                Object.keys(this.controls).forEach(key => {
+                    const control = this.controls[key];
+                    if (control.type === 'range') {
+                        control.addEventListener('input', () => this.updateSliderValue(control));
+                        control.addEventListener('input', () => this.updatePreview());
+                    } else {
+                        control.addEventListener('change', () => this.updatePreview());
+                    }
+                });
+
+                // Color picker sync
+                this.controls.textColor.addEventListener('input', (e) => {
+                    this.controls.textColorInput.value = e.target.value;
+                    this.updatePreview();
+                });
+
+                this.controls.textColorInput.addEventListener('input', (e) => {
+                    if (this.isValidColor(e.target.value)) {
+                        this.controls.textColor.value = e.target.value;
+                        this.updatePreview();
+                    }
+                });
+
+                // Sample text listeners
+                document.querySelectorAll('.sample-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.sample-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.loadSampleText(e.target.dataset.sample);
+                    });
+                });
+
+                // Tab listeners
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                        e.target.classList.add('active');
+                        document.getElementById(e.target.dataset.tab + '-tab').classList.add('active');
+                    });
+                });
+
+                // Advanced controls toggle
+                document.getElementById('toggle-advanced').addEventListener('click', () => {
+                    const advanced = document.getElementById('advanced-controls');
+                    const icon = document.querySelector('#toggle-advanced i');
+                    advanced.classList.toggle('show');
+                    icon.style.transform = advanced.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+
+                // Preset listeners
+                document.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.addEventListener('click', () => this.applyPreset(btn.dataset.preset));
+                });
+
+                // Export listeners
+                document.getElementById('export-btn').addEventListener('click', () => this.exportCSS());
+                document.getElementById('copy-css').addEventListener('click', () => this.copyCSS());
+
+                // Format listeners
+                document.querySelectorAll('.format-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.updateCSS();
+                    });
+                });
+
+                // Theme toggle
+                document.getElementById('theme-toggle').addEventListener('click', () => this.toggleTheme());
+
+                // Comparison mode
+                document.getElementById('comparison-toggle').addEventListener('click', () => this.toggleComparison());
+
+                // Sample text editing
+                this.sampleText.addEventListener('input', () => {
+                    this.updateStats();
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        switch(e.key) {
+                            case 'e':
+                                e.preventDefault();
+                                this.exportCSS();
+                                break;
+                            case 'd':
+                                e.preventDefault();
+                                this.toggleTheme();
+                                break;
+                        }
+                    }
+                });
+            }
+
+            initSampleTexts() {
+                this.sampleTexts = {
+                    paragraph: `The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once, making it perfect for testing typography. Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
+
+Good typography enhances the user experience by improving readability and establishing visual hierarchy. It involves careful consideration of font choice, spacing, alignment, and color to create harmonious and effective communication.
+
+Whether you're designing for web, print, or mobile interfaces, understanding typography fundamentals will elevate your design work and create more engaging user experiences.`,
+
+                    heading: `Main Headline Goes Here
+Secondary Headline
+Tertiary Headline
+Subheading for Context`,
+
+                    list: `Typography Fundamentals:
+• Font selection and pairing
+• Hierarchy and scale
+• Spacing and rhythm
+• Color and contrast
+• Readability optimization
+
+Best Practices:
+1. Choose fonts that match your brand
+2. Limit font combinations to 2-3 families  
+3. Establish clear visual hierarchy
+4. Optimize for different screen sizes
+5. Test accessibility and readability`,
+
+                    quote: `"Typography is the craft of endowing human language with a durable visual form."
+— Robert Bringhurst
+
+"Good typography is invisible. Bad typography is everywhere."
+— Anonymous
+
+"Typography is to literature as musical performance is to composition: an essential act of interpretation, full of endless opportunities for insight or obtuseness."
+— Robert Bringhurst`,
+
+                    mixed: `Typography in Modern Design
+
+Typography forms the backbone of visual communication in digital interfaces. From the bold headlines that capture attention to the subtle body text that guides users through content, every typographic choice impacts user experience.
+
+Key Considerations:
+• Readability across devices
+• Brand consistency  
+• Accessibility compliance
+• Performance optimization
+
+"The details are not the details. They make the design." — Charles Eames
+
+This quote perfectly encapsulates why typography matters so much in modern design work.`
+                };
+            }
+
+            initPresets() {
+                this.presets = {
+                    heading: {
+                        fontFamily: 'Montserrat',
+                        fontWeight: 700,
+                        fontSize: 32,
+                        lineHeight: 1.2,
+                        letterSpacing: -0.5,
+                        wordSpacing: 0,
+                        textTransform: 'none',
+                        textDecoration: 'none',
+                        fontStyle: 'normal'
+                    },
+                    body: {
+                        fontFamily: 'Inter',
+                        fontWeight: 400,
+                        fontSize: 16,
+                        lineHeight: 1.6,
+                        letterSpacing: 0,
+                        wordSpacing: 0,
+                        textTransform: 'none',
+                        textDecoration: 'none',
+                        fontStyle: 'normal'
+                    },
+                    caption: {
+                        fontFamily: 'Inter',
+                        fontWeight: 400,
+                        fontSize: 12,
+                        lineHeight: 1.4,
+                        letterSpacing: 0.5,
+                        wordSpacing: 0,
+                        textTransform: 'uppercase',
+                        textDecoration: 'none',
+                        fontStyle: 'normal'
+                    },
+                    display: {
+                        fontFamily: 'Poppins',
+                        fontWeight: 900,
+                        fontSize: 48,
+                        lineHeight: 1.1,
+                        letterSpacing: -1,
+                        wordSpacing: 0,
+                        textTransform: 'none',
+                        textDecoration: 'none',
+                        fontStyle: 'normal'
+                    },
+                    monospace: {
+                        fontFamily: 'Courier New',
+                        fontWeight: 400,
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        letterSpacing: 0,
+                        wordSpacing: 0,
+                        textTransform: 'none',
+                        textDecoration: 'none',
+                        fontStyle: 'normal'
+                    },
+                    elegant: {
+                        fontFamily: 'Playfair Display',
+                        fontWeight: 400,
+                        fontSize: 24,
+                        lineHeight: 1.4,
+                        letterSpacing: 0,
+                        wordSpacing: 0,
+                        textTransform: 'none',
+                        textDecoration: 'none',
+                        fontStyle: 'italic'
+                    }
+                };
+            }
+
+            initTheme() {
+                const savedTheme = localStorage.getItem('typography-theme') || 'light';
+                if (savedTheme === 'dark') {
+                    this.toggleTheme();
+                }
+            }
+
+            updateSliderValue(slider) {
+                const valueSpan = document.getElementById(slider.id + '-value');
+                let value = slider.value;
+                
+                if (slider.id === 'font-size') {
+                    value += 'px';
+                } else if (slider.id === 'letter-spacing' || slider.id === 'word-spacing') {
+                    value += 'px';
+                }
+                
+                valueSpan.textContent = value;
+            }
+
+            updatePreview() {
+                const styles = {
+                    fontFamily: `"${this.controls.fontFamily.value}", sans-serif`,
+                    fontWeight: this.controls.fontWeight.value,
+                    fontSize: this.controls.fontSize.value + 'px',
+                    lineHeight: this.controls.lineHeight.value,
+                    letterSpacing: this.controls.letterSpacing.value + 'px',
+                    wordSpacing: this.controls.wordSpacing.value + 'px',
+                    color: this.controls.textColor.value,
+                    textTransform: this.controls.textTransform.value,
+                    textDecoration: this.controls.textDecoration.value,
+                    fontStyle: this.controls.fontStyle.value
+                };
+
+                Object.assign(this.sampleText.style, styles);
+                this.updateStats();
+                this.updateCSS();
+            }
+
+            updateStats() {
+                const text = this.sampleText.textContent;
+                this.characterCount.textContent = text.length;
+                
+                this.updateAccessibilityScore();
+            }
+
+            updateAccessibilityScore() {
+                const fontSize = parseInt(this.controls.fontSize.value);
+                const lineHeight = parseFloat(this.controls.lineHeight.value);
+                const contrast = this.calculateContrast();
+                
+                let score = 'Excellent';
+                let scoreClass = 'score-excellent';
+                let details = [];
+
+                if (fontSize < 12) {
+                    score = 'Poor';
+                    scoreClass = 'score-poor';
+                    details.push('⚠ Font size too small');
+                } else if (fontSize < 16) {
+                    if (score === 'Excellent') score = 'Good';
+                    scoreClass = 'score-good';
+                    details.push('⚠ Consider larger font size');
+                } else {
+                    details.push('✓ Good font size');
+                }
+
+                if (lineHeight < 1.2) {
+                    score = 'Poor';
+                    scoreClass = 'score-poor';
+                    details.push('⚠ Line height too tight');
+                } else if (lineHeight < 1.4) {
+                    if (score === 'Excellent') score = 'Good';
+                    scoreClass = 'score-good';
+                    details.push('⚠ Consider more line spacing');
+                } else {
+                    details.push('✓ Good line spacing');
+                }
+
+                if (contrast < 3) {
+                    score = 'Poor';
+                    scoreClass = 'score-poor';
+                    details.push('⚠ Low contrast ratio');
+                } else if (contrast < 4.5) {
+                    if (score === 'Excellent') score = 'Good';
+                    scoreClass = 'score-good';
+                    details.push('⚠ Consider higher contrast');
+                } else {
+                    details.push('✓ Good contrast ratio');
+                }
+
+                this.accessibilityScore.textContent = `Accessibility: ${score}`;
+                this.accessibilityScore.className = `accessibility-score ${scoreClass}`;
+                this.accessibilityDetails.innerHTML = details.join('<br>');
+            }
+
+            calculateContrast() {
+                // Simplified contrast calculation
+                const textColor = this.hexToRgb(this.controls.textColor.value);
+                const bgColor = { r: 255, g: 255, b: 255 }; // Assuming white background
+                
+                const l1 = this.relativeLuminance(textColor);
+                const l2 = this.relativeLuminance(bgColor);
+                
+                return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+            }
+
+            hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? {
+                    r: parseInt(result[1], 16),
+                    g: parseInt(result[2], 16),
+                    b: parseInt(result[3], 16)
+                } : null;
+            }
+
+            relativeLuminance(rgb) {
+                const { r, g, b } = rgb;
+                const sRGB = [r, g, b].map(c => {
+                    c = c / 255;
+                    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+                });
+                return 0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2];
+            }
+
+            updateCSS() {
+                const format = document.querySelector('.format-btn.active').dataset.format;
+                let output = '';
+
+                const styles = {
+                    'font-family': `"${this.controls.fontFamily.value}", sans-serif`,
+                    'font-weight': this.controls.fontWeight.value,
+                    'font-size': this.controls.fontSize.value + 'px',
+                    'line-height': this.controls.lineHeight.value,
+                    'letter-spacing': this.controls.letterSpacing.value + 'px',
+                    'word-spacing': this.controls.wordSpacing.value + 'px',
+                    'color': this.controls.textColor.value,
+                    'text-transform': this.controls.textTransform.value,
+                    'text-decoration': this.controls.textDecoration.value,
+                    'font-style': this.controls.fontStyle.value
+                };
+
+                switch (format) {
+                    case 'css':
+                        output = '.typography-style {\n';
+                        Object.entries(styles).forEach(([key, value]) => {
+                            if (value !== '0px' && value !== 'none' && value !== 'normal') {
+                                output += `  ${key}: ${value};\n`;
+                            }
+                        });
+                        output += '}';
+                        break;
+                    
+                    case 'scss':
+                        output = '$typography-style: (\n';
+                        Object.entries(styles).forEach(([key, value]) => {
+                            if (value !== '0px' && value !== 'none' && value !== 'normal') {
+                                output += `  ${key}: ${value},\n`;
+                            }
+                        });
+                        output = output.slice(0, -2) + '\n);';
+                        break;
+                    
+                    case 'json':
+                        const cleanStyles = {};
+                        Object.entries(styles).forEach(([key, value]) => {
+                            if (value !== '0px' && value !== 'none' && value !== 'normal') {
+                                cleanStyles[key] = value;
+                            }
+                        });
+                        output = JSON.stringify(cleanStyles, null, 2);
+                        break;
+                }
+
+                this.cssOutput.textContent = output;
+            }
+
+            loadSampleText(type) {
+                this.sampleText.textContent = this.sampleTexts[type];
+                this.updateStats();
+            }
+
+            applyPreset(presetName) {
+                const preset = this.presets[presetName];
+                if (!preset) return;
+
+                Object.entries(preset).forEach(([key, value]) => {
+                    const control = this.controls[key];
+                    if (control) {
+                        control.value = value;
+                        if (control.type === 'range') {
+                            this.updateSliderValue(control);
+                        }
+                    }
+                });
+
+                this.updatePreview();
+                this.showNotification(`Applied "${presetName}" preset`);
+            }
+
+            exportCSS() {
+                const css = this.cssOutput.textContent;
+                const blob = new Blob([css], { type: 'text/css' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'typography-styles.css';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.showNotification('CSS exported successfully!');
+            }
+
+            copyCSS() {
+                navigator.clipboard.writeText(this.cssOutput.textContent).then(() => {
+                    this.showNotification('CSS copied to clipboard!');
+                }).catch(() => {
+                    this.showNotification('Failed to copy CSS', 'error');
+                });
+            }
+
+            toggleTheme() {
+                const body = document.body;
+                const isDark = body.dataset.theme === 'dark';
+                
+                body.dataset.theme = isDark ? 'light' : 'dark';
+                
+                const icon = document.querySelector('#theme-toggle i');
+                icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+                
+                localStorage.setItem('typography-theme', isDark ? 'light' : 'dark');
+            }
+
+            toggleComparison() {
+                const comparisonMode = document.getElementById('comparison-mode');
+                const regularPreview = this.sampleText;
+                
+                if (comparisonMode.classList.contains('active')) {
+                    comparisonMode.classList.remove('active');
+                    regularPreview.style.display = 'block';
+                } else {
+                    comparisonMode.classList.add('active');
+                    regularPreview.style.display = 'none';
+                    
+                    // Copy current text to comparison panels
+                    const originalText = document.getElementById('original-text');
+                    const modifiedText = document.getElementById('modified-text');
+                    
+                    originalText.textContent = regularPreview.textContent;
+                    modifiedText.textContent = regularPreview.textContent;
+                    
+                    // Apply default styles to original
+                    originalText.style.fontFamily = 'Inter, sans-serif';
+                    originalText.style.fontSize = '16px';
+                    originalText.style.lineHeight = '1.6';
+                    
+                    // Apply current styles to modified
+                    const currentStyles = window.getComputedStyle(regularPreview);
+                    modifiedText.style.fontFamily = currentStyles.fontFamily;
+                    modifiedText.style.fontSize = currentStyles.fontSize;
+                    modifiedText.style.lineHeight = currentStyles.lineHeight;
+                    modifiedText.style.fontWeight = currentStyles.fontWeight;
+                    modifiedText.style.letterSpacing = currentStyles.letterSpacing;
+                    modifiedText.style.wordSpacing = currentStyles.wordSpacing;
+                    modifiedText.style.color = currentStyles.color;
+                    modifiedText.style.textTransform = currentStyles.textTransform;
+                    modifiedText.style.textDecoration = currentStyles.textDecoration;
+                    modifiedText.style.fontStyle = currentStyles.fontStyle;
+                }
+            }
+
+            showNotification(message, type = 'success') {
+                this.notification.textContent = message;
+                this.notification.className = `notification show ${type}`;
+                
+                setTimeout(() => {
+                    this.notification.classList.remove('show');
+                }, 3000);
+            }
+
+            isValidColor(color) {
+                const s = new Option().style;
+                s.color = color;
+                return s.color !== '';
+            }
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new TypographyPlayground();
+        });
+    </script>
+</body>
+</html>
