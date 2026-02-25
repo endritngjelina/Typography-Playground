@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Playground Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&family=Source+Code+Pro:wght@300;400;500;600&family=Merriweather:wght@300;400;700;900&family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #e53e3e;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --gray: #718096;
+            --gray-light: #e2e8f0;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --sidebar-width: 380px;
+        }
+
+        .dark-mode {
+            --primary: #7f9cf5;
+            --primary-dark: #667eea;
+            --secondary: #9f7aea;
+            --dark: #e2e8f0;
+            --light: #1a202c;
+            --gray: #a0aec0;
+            --gray-light: #2d3748;
+            --bg-gradient: linear-gradient(135deg, #434190 0%, #4c51bf 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
+            min-height: 100vh;
+            color: var(--dark);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        body.dark-mode {
+            color: var(--dark);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            height: 100vh;
+            gap: 0;
+            transition: var(--transition);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode .sidebar {
+            background: rgba(26, 32, 44, 0.95);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .dark-mode .main-content {
+            background: rgba(26, 32, 44, 0.98);
+        }
+
+        .header {
+            padding: 20px 32px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .dark-mode .header {
+            background: rgba(26, 32, 44, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .header h1 {
+            color: var(--dark);
+        }
+
+        .header p {
+            color: var(--gray);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 26px;
+            background: var(--gray-light);
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .theme-toggle {
+            background: var(--primary);
+        }
+
+        .dark-mode .theme-toggle::before {
+            transform: translateX(22px);
+        }
+
+        .preview-area {
+            flex: 1;
+            padding: 48px;
+            overflow-y: auto;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .dark-mode .preview-area {
+            background: linear-gradient(45deg, rgba(26, 32, 44, 0.95), rgba(30, 41, 59, 0.95));
+        }
+
+        .control-section {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: var(--transition);
+        }
+
+        .dark-mode .control-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .control-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .section-title {
+            color: var(--dark);
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray);
+            margin-bottom: 6px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .control-label {
+            color: var(--gray);
+        }
+
+        .control-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            font-family: inherit;
+        }
+
+        .dark-mode .control-input {
+            background: rgba(26, 32, 44, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--dark);
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .dark-mode .control-input:focus {
+            background: rgba(26, 32, 44, 1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .range-input {
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .dark-mode .range-input {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .range-input::-moz-range-thumb {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .dual-control {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .color-input {
+            height: 44px;
+            border-radius: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            background: white;
+            transition: var(--transition);
+        }
+
+        .dark-mode .color-input {
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .preset-btn {
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .preset-btn {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--dark);
+        }
+
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .text-samples {
+            display: grid;
+            gap: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .sample-section {
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .dark-mode .sample-section {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        #previewText {
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .export-section {
+            position: sticky;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .dark-mode .export-section {
+            background: rgba(26, 32, 44, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .export-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .export-btn.secondary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .stats-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .dark-mode .stat-item {
+            background: rgba(26, 32, 44, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .advanced-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .text-content-area {
+            margin-bottom: 24px;
+        }
+
+        .content-tabs {
+            display: flex;
+            margin-bottom: 16px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            padding: 4px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .content-tabs {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .tab-btn {
+            color: var(--gray);
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .tab-btn.active {
+            background: var(--gray-light);
+            color: var(--primary);
+        }
+
+        .custom-text-input {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .typography-analysis {
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            transition: var(--transition);
+        }
+
+        .dark-mode .typography-analysis {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .analysis-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .dark-mode .analysis-item {
+            color: var(--gray);
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 100% 24px;
+            z-index: 10;
+            display: none;
+        }
+
+        .dark-mode .grid-overlay {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        .grid-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 20;
+            transition: var(--transition);
+        }
+
+        .dark-mode .grid-toggle {
+            background: var(--gray-light);
+        }
+
+        .font-pairing {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pairing-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .pairing-option {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pairing-option:hover {
+            border-color: var(--primary);
+        }
+
+        .pairing-option.active {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .pairing-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .pairing-fonts {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .dark-mode .pairing-fonts {
+            color: var(--gray);
+        }
+
+        .pairing-sample {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: 700;
+            background: var(--primary);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .text-effect-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .effect-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .effect-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .effect-label {
+            font-size: 12px;
+            color: var(--gray);
+            min-width: 60px;
+        }
+
+        .gradient-preview {
+            height: 40px;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .gradient-preview {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sample-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .url-share {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dark-mode .url-input {
+            background: rgba(26, 32, 44, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--dark);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .type-scale-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .scale-ratio-display {
+            font-size: 12px;
+            color: var(--gray);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .animation-select {
+            width: 100%;
+        }
+
+        .animation-preview {
+            margin-top: 8px;
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .animation-preview {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .animation-preview:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .sidebar {
+                height: auto;
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .preview-area {
+                padding: 24px;
+            }
+
+            .header {
+                padding: 16px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .dual-control, .advanced-controls, .text-effect-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .preset-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-display {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="section-title">
+                <i class="fas fa-sliders-h"></i>
+                Typography Controls
+            </div>
+            
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-font"></i>
+                    Font Properties
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Font Family</label>
+                    <select id="fontFamily" class="control-input">
+                        <option value="Inter">Inter</option>
+                        <option value="Playfair Display">Playfair Display</option>
+                        <option value="Source Code Pro">Source Code Pro</option>
+                        <option value="Merriweather">Merriweather</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Roboto Mono">Roboto Mono</option>
+                        <option value="Space Grotesk">Space Grotesk</option>
+                        <option value="Libre Baskerville">Libre Baskerville</option>
+                        <option value="Raleway">Raleway</option>
+                    </select>
+                </div>
+
+                <div class="dual-control">
+                    <div class="control-group">
+                        <label class="control-label">Size (px)</label>
+                        <input type="range" id="fontSize" class="control-input range-input" min="12" max="72" value="18">
+                        <span id="fontSizeValue">18px</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Weight</label>
+                        <select id="fontWeight" class="control-input">
+                            <option value="300">Light (300)</option>
+                            <option value="400" selected>Regular (400)</option>
+                            <option value="500">Medium (500)</option>
+                            <option value="600">Semi Bold (600)</option>
+                            <option value="700">Bold (700)</option>
+                            <option value="800">Extra Bold (800)</option>
+                            <option value="900">Black (900)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    Spacing & Rhythm
+                </div>
+                
+                <div class="dual-control">
+                    <div class="control-group">
+                        <label class="control-label">Line Height</label>
+                        <input type="range" id="lineHeight" class="control-input range-input" min="0.8" max="3" step="0.1" value="1.6">
+                        <span id="lineHeightValue">1.6</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Letter Spacing</label>
+                        <input type="range" id="letterSpacing" class="control-input range-input" min="-0.05" max="0.2" step="0.01" value="0">
+                        <span id="letterSpacingValue">0em</span>
+                    </div>
+                </div>
+
+                <div class="dual-control">
+                    <div class="control-group">
+                        <label class="control-label">Word Spacing</label>
+                        <input type="range" id="wordSpacing" class="control-input range-input" min="-0.2" max="1" step="0.05" value="0">
+                        <span id="wordSpacingValue">0em</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Paragraph Spacing</label>
+                        <input type="range" id="paragraphSpacing" class="control-input range-input" min="0" max="3" step="0.1" value="1">
+                        <span id="paragraphSpacingValue">1em</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-magic"></i>
+                    Advanced Typography
+                </div>
+                
+                <div class="advanced-controls">
+                    <div class="control-group">
+                        <label class="control-label">Text Transform</label>
+                        <select id="textTransform" class="control-input">
+                            <option value="none">None</option>
+                            <option value="uppercase">Uppercase</option>
+                            <option value="lowercase">Lowercase</option>
+                            <option value="capitalize">Capitalize</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Font Variant</label>
+                        <select id="fontVariant" class="control-input">
+                            <option value="normal">Normal</option>
+                            <option value="small-caps">Small Caps</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Text Color</label>
+                    <input type="color" id="textColor" class="color-input" value="#2d3748">
+                </div>
+
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="applyPreset('elegant')">Elegant</button>
+                    <button class="preset-btn" onclick="applyPreset('modern')">Modern</button>
+                    <button class="preset-btn" onclick="applyPreset('classic')">Classic</button>
+                    <button class="preset-btn" onclick="applyPreset('technical')">Technical</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-paint-brush"></i>
+                    Text Effects
+                </div>
+                
+                <div class="text-effect-controls">
+                    <div class="effect-group">
+                        <div class="effect-control">
+                            <span class="effect-label">Shadow:</span>
+                            <input type="checkbox" id="textShadowToggle">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">X:</span>
+                            <input type="range" id="shadowX" class="range-input" min="-10" max="10" value="2">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">Y:</span>
+                            <input type="range" id="shadowY" class="range-input" min="-10" max="10" value="2">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">Blur:</span>
+                            <input type="range" id="shadowBlur" class="range-input" min="0" max="20" value="4">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">Color:</span>
+                            <input type="color" id="shadowColor" value="#000000">
+                        </div>
+                    </div>
+                    
+                    <div class="effect-group">
+                        <div class="effect-control">
+                            <span class="effect-label">Gradient:</span>
+                            <input type="checkbox" id="textGradientToggle">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">Color 1:</span>
+                            <input type="color" id="gradientColor1" value="#667eea">
+                        </div>
+                        <div class="effect-control">
+                            <span class="effect-label">Color 2:</span>
+                            <input type="color" id="gradientColor2" value="#764ba2">
+                        </div>
+                        <div class="gradient-preview" id="gradientPreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-text-height"></i>
+                    Type Scale
+                </div>
+                
+                <div class="type-scale-controls">
+                    <div class="control-group">
+                        <label class="control-label">Base Size</label>
+                        <input type="range" id="baseSize" class="range-input" min="14" max="24" value="18">
+                        <span id="baseSizeValue">18px</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Scale Ratio</label>
+                        <input type="range" id="scaleRatio" class="range-input" min="1.1" max="1.4" step="0.05" value="1.25">
+                        <span id="scaleRatioValue">1.25</span>
+                        <div class="scale-ratio-display" id="ratioName">Major Third</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Animation
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Text Animation</label>
+                    <select id="textAnimation" class="control-input animation-select">
+                        <option value="none">None</option>
+                        <option value="fade">Fade In</option>
+                        <option value="slide">Slide Up</option>
+                        <option value="pop">Pop In</option>
+                        <option value="typewriter">Typewriter</option>
+                    </select>
+                </div>
+                
+                <div class="animation-preview" id="animationPreview" onclick="triggerAnimationPreview()">
+                    Preview Animation
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="text-content-area">
+                    <div class="section-title">
+                        <i class="fas fa-align-left"></i>
+                        Content
+                    </div>
+                    <div class="content-tabs">
+                        <button class="tab-btn active" onclick="switchContent('sample')">Sample</button>
+                        <button class="tab-btn" onclick="switchContent('custom')">Custom</button>
+                    </div>
+                    <textarea id="customText" class="control-input custom-text-input" placeholder="Enter your custom text here..." style="display:none;">The quick brown fox jumps over the lazy dog. Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.</textarea>
+                </div>
+            </div>
+
+            <div class="stats-display">
+                <div class="stat-item">
+                    <div class="stat-value" id="readabilityScore">85</div>
+                    <div class="stat-label">Readability</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="contrastRatio">12:1</div>
+                    <div class="stat-label">Contrast</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="charactersPerLine">65</div>
+                    <div class="stat-label">CPL</div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="section-title">
+                    <i class="fas fa-share-alt"></i>
+                    Share Configuration
+                </div>
+                
+                <div class="url-share">
+                    <input type="text" id="shareUrl" class="url-input" readonly>
+                    <button class="copy-btn" onclick="copyShareUrl()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <button class="export-btn" onclick="exportCSS()">
+                    <i class="fas fa-code"></i> Export CSS
+                </button>
+                <button class="export-btn secondary" onclick="exportJSON()">
+                    <i class="fas fa-save"></i> Save Configuration
+                </button>
+                <button class="export-btn" onclick="exportPNG()" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">
+                    <i class="fas fa-image"></i> Export PNG
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Typography Playground Pro</h1>
+                    <p>Professional typography experimentation with advanced controls and real-time preview</p>
+                </div>
+                <div class="header-controls">
+                    <div class="theme-toggle" id="themeToggle"></div>
+                </div>
+            </div>
+
+            <div class="preview-area">
+                <button class="grid-toggle" id="gridToggle">
+                    <i class="fas fa-border-all"></i>
+                </button>
+                <div class="grid-overlay" id="gridOverlay"></div>
+                
+                <div class="text-samples">
+                    <div class="sample-section">
+                        <div id="previewText">
+                            <h1 style="font-size: 2.5em; margin-bottom: 0.5em; line-height: 1.2;">The Evolution of Digital Typography</h1>
+                            
+                            <p>Typography is the art and technique of arranging type to make written language legible, readable and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.</p>
+                            
+                            <p>In the digital age, typography has evolved beyond traditional print constraints. Web typography must consider factors like screen resolution, device capabilities, and responsive design principles. Modern CSS provides unprecedented control over typographic elements, enabling designers to create sophisticated hierarchies and reading experiences.</p>
+                            
+                            <h2 style="font-size: 1.8em; margin: 1.5em 0 0.5em 0;">Key Principles of Good Typography</h2>
+                            
+                            <p>Effective typography serves both aesthetic and functional purposes. It guides the reader's eye through content, establishes hierarchy, and creates visual rhythm. The best typography is often invisible to the reader, serving its purpose without drawing attention to itself.</p>
+                            
+                            <p>Consider factors such as x-height, character width, and overall texture when selecting fonts. The goal is to achieve optimal readability while maintaining visual appeal and brand consistency.</p>
+                            
+                            <blockquote style="margin: 2em 0; padding: 1em 2em; border-left: 4px solid #667eea; background: rgba(102, 126, 234, 0.05); font-style: italic;">
+                                "Typography is a beautiful group of letters, not a group of beautiful letters." — Matthew Carter
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="typography-analysis">
+                    <div class="analysis-title">Typography Analysis</div>
+                    <div class="analysis-grid">
+                        <div class="analysis-item">
+                            <span>Font Stack:</span>
+                            <span id="fontStackDisplay">Inter, sans-serif</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span>Optimal Line Length:</span>
+                            <span id="optimalLength">45-75 chars</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span>Scale Ratio:</span>
+                            <span id="scaleRatioDisplay">1.25 (Major Third)</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span>Vertical Rhythm:</span>
+                            <span id="verticalRhythm">Consistent</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span>Accessibility:</span>
+                            <span id="accessibilityScore">AAA</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span>Ligatures:</span>
+                            <span id="ligaturesStatus">Disabled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Typography configuration object
+        const typographyConfig = {
+            fontFamily: 'Inter',
+            fontSize: 18,
+            fontWeight: 400,
+            lineHeight: 1.6,
+            letterSpacing: 0,
+            wordSpacing: 0,
+            paragraphSpacing: 1,
+            textTransform: 'none',
+            fontVariant: 'normal',
+            textColor: '#2d3748',
+            textShadow: false,
+            shadowX: 2,
+            shadowY: 2,
+            shadowBlur: 4,
+            shadowColor: '#000000',
+            textGradient: false,
+            gradientColor1: '#667eea',
+            gradientColor2: '#764ba2',
+            baseSize: 18,
+            scaleRatio: 1.25,
+            textAnimation: 'none',
+            darkMode: false
+        };
+
+        // Sample texts for different content types
+        const sampleTexts = {
+            sample: `
+                <h1 style="font-size: 2.5em; margin-bottom: 0.5em; line-height: 1.2;">The Evolution of Digital Typography</h1>
+                
+                <p>Typography is the art and technique of arranging type to make written language legible, readable and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.</p>
+                
+                <p>In the digital age, typography has evolved beyond traditional print constraints. Web typography must consider factors like screen resolution, device capabilities, and responsive design principles. Modern CSS provides unprecedented control over typographic elements, enabling designers to create sophisticated hierarchies and reading experiences.</p>
+                
+                <h2 style="font-size: 1.8em; margin: 1.5em 0 0.5em 0;">Key Principles of Good Typography</h2>
+                
+                <p>Effective typography serves both aesthetic and functional purposes. It guides the reader's eye through content, establishes hierarchy, and creates visual rhythm. The best typography is often invisible to the reader, serving its purpose without drawing attention to itself.</p>
+                
+                <p>Consider factors such as x-height, character width, and overall texture when selecting fonts. The goal is to achieve optimal readability while maintaining visual appeal and brand consistency.</p>
+                
+                <blockquote style="margin: 2em 0; padding: 1em 2em; border-left: 4px solid #667eea; background: rgba(102, 126, 234, 0.05); font-style: italic;">
+                    "Typography is a beautiful group of letters, not a group of beautiful letters." — Matthew Carter
+                </blockquote>
+            `
+        };
+
+        // Typography presets
+        const presets = {
+            elegant: {
+                fontFamily: 'Playfair Display',
+                fontSize: 20,
+                fontWeight: 400,
+                lineHeight: 1.7,
+                letterSpacing: 0.02,
+                wordSpacing: 0.05,
+                paragraphSpacing: 1.2,
+                textColor: '#2d3748'
+            },
+            modern: {
+                fontFamily: 'Inter',
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: 1.5,
+                letterSpacing: 0,
+                wordSpacing: 0,
+                paragraphSpacing: 1,
+                textColor: '#2d3748'
+            },
+            classic: {
+                fontFamily: 'Merriweather',
+                fontSize: 18,
+                fontWeight: 400,
+                lineHeight: 1.8,
+                letterSpacing: 0.01,
+                wordSpacing: 0,
+                paragraphSpacing: 1.3,
+                textColor: '#2d3748'
+            },
+            technical: {
+                fontFamily: 'Source Code Pro',
+                fontSize: 15,
+                fontWeight: 400,
+                lineHeight: 1.4,
+                letterSpacing: 0.02,
+                wordSpacing: 0,
+                paragraphSpacing: 0.8,
+                textColor: '#2d3748'
+            }
+        };
+
+        // Scale ratio names
+        const ratioNames = {
+            1.1: 'Minor Second',
+            1.125: 'Major Second',
+            1.2: 'Minor Third',
+            1.25: 'Major Third',
+            1.333: 'Perfect Fourth',
+            1.414: 'Augmented Fourth',
+            1.5: 'Perfect Fifth',
+            1.618: 'Golden Ratio'
+        };
+
+        // Initialize controls
+        function initializeControls() {
+            const controls = [
+                'fontFamily', 'fontSize', 'fontWeight', 'lineHeight',
+                'letterSpacing', 'wordSpacing', 'paragraphSpacing',
+                'textTransform', 'fontVariant', 'textColor',
+                'textShadowToggle', 'shadowX', 'shadowY', 'shadowBlur', 'shadowColor',
+                'textGradientToggle', 'gradientColor1', 'gradientColor2',
+                'baseSize', 'scaleRatio', 'textAnimation'
+            ];
+
+            controls.forEach(control => {
+                const element = document.getElementById(control);
+                if (element) {
+                    element.addEventListener('input', updateTypography);
+                    if (typographyConfig[control] !== undefined) {
+                        element.value = typographyConfig[control];
+                    }
+                }
+            });
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Grid toggle
+            document.getElementById('gridToggle').addEventListener('click', toggleGrid);
+            
+            // Update gradient preview
+            updateGradientPreview();
+            
+            // Initialize from URL parameters
+            initializeFromUrl();
+            
+            updateTypography();
+        }
+
+        // Update typography preview
+        function updateTypography() {
+            const previewText = document.getElementById('previewText');
+            
+            // Update configuration from controls
+            Object.keys(typographyConfig).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        typographyConfig[key] = element.checked;
+                    } else {
+                        typographyConfig[key] = element.value;
+                    }
+                }
+            });
+
+            // Apply styles to preview text
+            const styles = {
+                fontFamily: `"${typographyConfig.fontFamily}", -apple-system, BlinkMacSystemFont, sans-serif`,
+                fontSize: `${typographyConfig.fontSize}px`,
+                fontWeight: typographyConfig.fontWeight,
+                lineHeight: typographyConfig.lineHeight,
+                letterSpacing: `${typographyConfig.letterSpacing}em`,
+                wordSpacing: `${typographyConfig.wordSpacing}em`,
+                textTransform: typographyConfig.textTransform,
+                fontVariant: typographyConfig.fontVariant,
+                color: typographyConfig.textColor
+            };
+
+            // Apply text shadow
+            if (typographyConfig.textShadow) {
+                styles.textShadow = `${typographyConfig.shadowX}px ${typographyConfig.shadowY}px ${typographyConfig.shadowBlur}px ${typographyConfig.shadowColor}`;
+            } else {
+                styles.textShadow = 'none';
+            }
+            
+            // Apply text gradient
+            if (typographyConfig.textGradient) {
+                styles.background = `linear-gradient(135deg, ${typographyConfig.gradientColor1}, ${typographyConfig.gradientColor2})`;
+                styles.webkitBackgroundClip = 'text';
+                styles.backgroundClip = 'text';
+                styles.color = 'transparent';
+            }
+
+            Object.assign(previewText.style, styles);
+
+            // Update paragraph spacing
+            const paragraphs = previewText.querySelectorAll('p');
+            paragraphs.forEach(p => {
+                p.style.marginBottom = `${typographyConfig.paragraphSpacing}em`;
+            });
+            
+            // Update heading sizes based on scale
+            const headings = previewText.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            if (headings.length > 0) {
+                const base = parseFloat(typographyConfig.baseSize);
+                const ratio = parseFloat(typographyConfig.scaleRatio);
+                
+                headings[0].style.fontSize = `${base * Math.pow(ratio, 2)}px`;
+                if (headings[1]) headings[1].style.fontSize = `${base * ratio}px`;
+                if (headings[2]) headings[2].style.fontSize = `${base}px`;
+            }
+
+            // Update value displays
+            updateValueDisplays();
+            updateStats();
+            updateAnalysis();
+            updateGradientPreview();
+            updateShareUrl();
+        }
+
+        // Update range input value displays
+        function updateValueDisplays() {
+            const displays = [
+                { id: 'fontSize', suffix: 'px' },
+                { id: 'lineHeight', suffix: '' },
+                { id: 'letterSpacing', suffix: 'em' },
+                { id: 'wordSpacing', suffix: 'em' },
+                { id: 'paragraphSpacing', suffix: 'em' },
+                { id: 'baseSize', suffix: 'px' },
+                { id: 'scaleRatio', suffix: '' }
+            ];
+
+            displays.forEach(display => {
+                const element = document.getElementById(display.id);
+                const valueElement = document.getElementById(display.id + 'Value');
+                if (element && valueElement) {
+                    valueElement.textContent = element.value + display.suffix;
+                }
+            });
+            
+            // Update ratio name
+            const ratioValue = parseFloat(typographyConfig.scaleRatio).toFixed(3);
+            const ratioName = ratioNames[ratioValue] || 'Custom';
+            document.getElementById('ratioName').textContent = ratioName;
+            document.getElementById('scaleRatioDisplay').textContent = `${ratioValue} (${ratioName})`;
+        }
+
+        // Update statistics
+        function updateStats() {
+            // Calculate readability score (simplified)
+            const fontSize = parseInt(typographyConfig.fontSize);
+            const lineHeight = parseFloat(typographyConfig.lineHeight);
+            let readabilityScore = 50;
+            
+            if (fontSize >= 16 && fontSize <= 22) readabilityScore += 20;
+            if (lineHeight >= 1.4 && lineHeight <= 1.8) readabilityScore += 15;
+            if (parseFloat(typographyConfig.letterSpacing) >= -0.02 && parseFloat(typographyConfig.letterSpacing) <= 0.05) readabilityScore += 15;
+            
+            document.getElementById('readabilityScore').textContent = Math.min(100, readabilityScore);
+
+            // Calculate contrast ratio (simplified)
+            const bgColor = typographyConfig.darkMode ? [26, 32, 44] : [255, 255, 255]; // Background color
+            const textColorHex = typographyConfig.textColor;
+            const textColorRgb = hexToRgb(textColorHex);
+            const contrast = calculateContrastRatio(bgColor, textColorRgb);
+            
+            let contrastRatioText = contrast.toFixed(1) + ':1';
+            let accessibilityScore = 'AAA';
+            
+            if (contrast < 4.5) {
+                accessibilityScore = 'Fail';
+            } else if (contrast < 7) {
+                accessibilityScore = 'AA';
+            }
+            
+            document.getElementById('contrastRatio').textContent = contrastRatioText;
+            document.getElementById('accessibilityScore').textContent = accessibilityScore;
+
+            // Calculate characters per line (estimated)
+            const charWidth = fontSize * 0.6; // Approximate character width
+            const containerWidth = 600; // Approximate container width
+            const cpl = Math.floor(containerWidth / charWidth);
+            document.getElementById('charactersPerLine').textContent = cpl;
+            
+            // Update ligatures status
+            document.getElementById('ligaturesStatus').textContent = 
+                typographyConfig.fontVariant === 'small-caps' ? 'Enabled' : 'Disabled';
+        }
+
+        // Update typography analysis
+        function updateAnalysis() {
+            document.getElementById('fontStackDisplay').textContent = `${typographyConfig.fontFamily}, sans-serif`;
+            
+            const fontSize = parseInt(typographyConfig.fontSize);
+            let optimalLength = '45-75 chars';
+            if (fontSize < 16) optimalLength = '50-85 chars';
+            else if (fontSize > 20) optimalLength = '40-70 chars';
+            
+            document.getElementById('optimalLength').textContent = optimalLength;
+        }
+
+        // Apply typography preset
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            if (!preset) return;
+
+            Object.keys(preset).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = preset[key];
+                    typographyConfig[key] = preset[key];
+                }
+            });
+
+            updateTypography();
+            showNotification(`"${presetName}" preset applied`);
+        }
+
+        // Switch content type
+        function switchContent(type) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const customTextArea = document.getElementById('customText');
+            const previewText = document.getElementById('previewText');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`[onclick="switchContent('${type}')"]`).classList.add('active');
+
+            if (type === 'custom') {
+                customTextArea.style.display = 'block';
+                customTextArea.addEventListener('input', function() {
+                    previewText.innerHTML = this.value.replace(/\n/g, '<br>');
+                    updateTypography();
+                });
+                if (customTextArea.value) {
+                    previewText.innerHTML = customTextArea.value.replace(/\n/g, '<br>');
+                }
+            } else {
+                customTextArea.style.display = 'none';
+                previewText.innerHTML = sampleTexts.sample;
+            }
+            updateTypography();
+        }
+
+        // Toggle dark mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            typographyConfig.darkMode = document.body.classList.contains('dark-mode');
+            updateTypography();
+            updateShareUrl();
+        }
+
+        // Toggle grid overlay
+        function toggleGrid() {
+            const gridOverlay = document.getElementById('gridOverlay');
+            const gridToggle = document.getElementById('gridToggle');
+            
+            if (gridOverlay.style.display === 'block') {
+                gridOverlay.style.display = 'none';
+                gridToggle.innerHTML = '<i class="fas fa-border-all"></i>';
+            } else {
+                gridOverlay.style.display = 'block';
+                gridToggle.innerHTML = '<i class="fas fa-times"></i>';
+            }
+        }
+
+        // Update gradient preview
+        function updateGradientPreview() {
+            const preview = document.getElementById('gradientPreview');
+            if (typographyConfig.textGradient) {
+                preview.style.background = `linear-gradient(135deg, ${typographyConfig.gradientColor1}, ${typographyConfig.gradientColor2})`;
+            } else {
+                preview.style.background = 'transparent';
+            }
+        }
+
+        // Trigger animation preview
+        function triggerAnimationPreview() {
+            const previewText = document.getElementById('previewText');
+            const animation = typographyConfig.textAnimation;
+            
+            if (animation === 'none') return;
+            
+            previewText.style.animation = 'none';
+            setTimeout(() => {
+                previewText.style.animation = `${animation} 1s ease`;
+                
+                // Remove animation after it completes
+                setTimeout(() => {
+                    previewText.style.animation = '';
+                }, 1000);
+            }, 10);
+        }
+
+        // Update share URL
+        function updateShareUrl() {
+            const configStr = btoa(JSON.stringify(typographyConfig));
+            const url = `${window.location.origin}${window.location.pathname}?config=${configStr}`;
+            document.getElementById('shareUrl').value = url;
+        }
+
+        // Initialize from URL parameters
+        function initializeFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const configStr = urlParams.get('config');
+            
+            if (configStr) {
+                try {
+                    const config = JSON.parse(atob(configStr));
+                    
+                    // Apply configuration
+                    Object.keys(config).forEach(key => {
+                        if (typographyConfig.hasOwnProperty(key)) {
+                            typographyConfig[key] = config[key];
+                            
+                            const element = document.getElementById(key);
+                            if (element) {
+                                if (element.type === 'checkbox') {
+                                    element.checked = config[key];
+                                } else {
+                                    element.value = config[key];
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Apply dark mode if needed
+                    if (config.darkMode) {
+                        document.body.classList.add('dark-mode');
+                    }
+                    
+                    showNotification('Configuration loaded from URL');
+                } catch (e) {
+                    console.error('Error loading configuration from URL', e);
+                }
+            }
+        }
+
+        // Copy share URL to clipboard
+        function copyShareUrl() {
+            const urlInput = document.getElementById('shareUrl');
+            urlInput.select();
+            document.execCommand('copy');
+            showNotification('URL copied to clipboard!');
+        }
+
+        // Export CSS
+        function exportCSS() {
+            const css = `/* Typography Configuration */
+.typography-style {
+    font-family: "${typographyConfig.fontFamily}", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: ${typographyConfig.fontSize}px;
+    font-weight: ${typographyConfig.fontWeight};
+    line-height: ${typographyConfig.lineHeight};
+    letter-spacing: ${typographyConfig.letterSpacing}em;
+    word-spacing: ${typographyConfig.wordSpacing}em;
+    text-transform: ${typographyConfig.textTransform};
+    font-variant: ${typographyConfig.fontVariant};
+    color: ${typographyConfig.textColor};
+}
+
+.typography-style p {
+    margin-bottom: ${typographyConfig.paragraphSpacing}em;
+}
+
+/* Additional heading styles */
+.typography-style h1 {
+    font-size: ${typographyConfig.baseSize * Math.pow(typographyConfig.scaleRatio, 2)}px;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
+
+.typography-style h2 {
+    font-size: ${typographyConfig.baseSize * typographyConfig.scaleRatio}px;
+    line-height: 1.3;
+    margin: 1.5em 0 0.5em 0;
+}
+
+.typography-style h3 {
+    font-size: ${typographyConfig.baseSize}px;
+    line-height: 1.4;
+    margin: 1.2em 0 0.4em 0;
+}
+
+/* Text effects */
+.typography-style {
+    ${typographyConfig.textShadow ? `text-shadow: ${typographyConfig.shadowX}px ${typographyConfig.shadowY}px ${typographyConfig.shadowBlur}px ${typographyConfig.shadowColor};` : ''}
+    ${typographyConfig.textGradient ? `
+    background: linear-gradient(135deg, ${typographyConfig.gradientColor1}, ${typographyConfig.gradientColor2});
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    ` : ''}
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+    .typography-style {
+        font-size: ${Math.max(14, typographyConfig.fontSize * 0.9)}px;
+    }
+    
+    .typography-style h1 {
+        font-size: ${Math.max(24, typographyConfig.baseSize * Math.pow(typographyConfig.scaleRatio, 1.8))}px;
+    }
+    
+    .typography-style h2 {
+        font-size: ${Math.max(20, typographyConfig.baseSize * typographyConfig.scaleRatio * 0.9)}px;
+    }
+}`;
+
+            // Create and download CSS file
+            const blob = new Blob([css], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'typography-config.css';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Show success message
+            showNotification('CSS exported successfully!', 'success');
+        }
+
+        // Export JSON configuration
+        function exportJSON() {
+            const config = {
+                ...typographyConfig,
+                timestamp: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const json = JSON.stringify(config, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'typography-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('Configuration saved!', 'success');
+        }
+
+        // Export as PNG
+        function exportPNG() {
+            const preview = document.querySelector('.sample-section');
+            
+            html2canvas(preview, {
+                scale: 2,
+                backgroundColor: typographyConfig.darkMode ? '#1a202c' : '#ffffff'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'typography-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                showNotification('PNG exported successfully!', 'success');
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Utility functions
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? [
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16)
+            ] : [0, 0, 0];
+        }
+
+        function calculateContrastRatio(color1, color2) {
+            const l1 = getRelativeLuminance(color1);
+            const l2 = getRelativeLuminance(color2);
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        function getRelativeLuminance(rgb) {
+            const [r, g, b] = rgb.map(c => {
+                c = c / 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeControls();
+            updateShareUrl();
+            
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fade {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                @keyframes slide {
+                    from { transform: translateY(20px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                
+                @keyframes pop {
+                    0% { transform: scale(0.8); opacity: 0; }
+                    70% { transform: scale(1.1); opacity: 1; }
+                    100% { transform: scale(1); }
+                }
+                
+                @keyframes typewriter {
+                    from { width: 0; }
+                    to { width: 100%; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
