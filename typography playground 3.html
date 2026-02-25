@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Playground - Professional Design Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Nunito:wght@300;400;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Crimson+Text:wght@400;600&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #475569;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #1a202c 50%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 100vh;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .controls-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+            box-shadow: var(--shadow);
+            overflow-y: auto;
+            max-height: calc(100vh - 4rem);
+        }
+
+        .preview-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .control-group:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: var(--accent-color);
+        }
+
+        .control-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .control-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .slider-container {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--bg-primary);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-color);
+        }
+
+        .slider-value {
+            position: absolute;
+            right: 0;
+            top: -1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .toggle-button {
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .toggle-button:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .toggle-button.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        .preview-content {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .sample-text {
+            transition: all 0.3s ease;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .action-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .action-button.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .action-button.secondary:hover {
+            background: var(--border-color);
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .preset-button {
+            padding: 1rem 0.75rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .preset-button:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .code-block {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: var(--text-primary);
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .controls-panel {
+                order: 2;
+            }
+            
+            .preview-panel {
+                order: 1;
+            }
+        }
+
+        .animation-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .color-picker-group {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: none;
+            cursor: pointer;
+        }
+
+        .floating-panel {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            z-index: 100;
+            display: none;
+            min-width: 200px;
+        }
+
+        .floating-panel.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i class="fas fa-sliders-h"></i>
+                    Typography Controls
+                </h2>
+            </div>
+
+            <!-- Font Family -->
+            <div class="control-group">
+                <label class="control-label">Font Family</label>
+                <select class="control-input" id="fontFamily">
+                    <option value="Inter">Inter</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Source Sans Pro">Source Sans Pro</option>
+                    <option value="Nunito">Nunito</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Crimson Text">Crimson Text</option>
+                    <option value="Lora">Lora</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="Times, serif">Times</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="Helvetica, sans-serif">Helvetica</option>
+                </select>
+            </div>
+
+            <!-- Font Weight -->
+            <div class="control-group">
+                <label class="control-label">Font Weight</label>
+                <div class="button-group">
+                    <button class="toggle-button" data-weight="300">Light</button>
+                    <button class="toggle-button active" data-weight="400">Regular</button>
+                    <button class="toggle-button" data-weight="500">Medium</button>
+                    <button class="toggle-button" data-weight="600">Semi Bold</button>
+                    <button class="toggle-button" data-weight="700">Bold</button>
+                </div>
+            </div>
+
+            <!-- Font Size -->
+            <div class="control-group">
+                <label class="control-label">Font Size</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="fontSize" min="12" max="72" value="16">
+                    <span class="slider-value" id="fontSizeValue">16px</span>
+                </div>
+            </div>
+
+            <!-- Line Height -->
+            <div class="control-group">
+                <label class="control-label">Line Height</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="lineHeight" min="1" max="3" step="0.1" value="1.5">
+                    <span class="slider-value" id="lineHeightValue">1.5</span>
+                </div>
+            </div>
+
+            <!-- Letter Spacing -->
+            <div class="control-group">
+                <label class="control-label">Letter Spacing</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="letterSpacing" min="-2" max="10" step="0.1" value="0">
+                    <span class="slider-value" id="letterSpacingValue">0px</span>
+                </div>
+            </div>
+
+            <!-- Word Spacing -->
+            <div class="control-group">
+                <label class="control-label">Word Spacing</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="wordSpacing" min="0" max="20" step="0.5" value="0">
+                    <span class="slider-value" id="wordSpacingValue">0px</span>
+                </div>
+            </div>
+
+            <!-- Text Color -->
+            <div class="control-group">
+                <label class="control-label">Text Color</label>
+                <div class="color-picker-group">
+                    <input type="text" class="control-input" id="textColor" value="#000000" placeholder="#000000">
+                    <input type="color" class="color-input" id="textColorPicker" value="#000000">
+                </div>
+            </div>
+
+            <!-- Text Alignment -->
+            <div class="control-group">
+                <label class="control-label">Text Alignment</label>
+                <div class="button-group">
+                    <button class="toggle-button active" data-align="left">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button class="toggle-button" data-align="center">
+                        <i class="fas fa-align-center"></i>
+                    </button>
+                    <button class="toggle-button" data-align="right">
+                        <i class="fas fa-align-right"></i>
+                    </button>
+                    <button class="toggle-button" data-align="justify">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Text Transform -->
+            <div class="control-group">
+                <label class="control-label">Text Transform</label>
+                <div class="button-group">
+                    <button class="toggle-button active" data-transform="none">None</button>
+                    <button class="toggle-button" data-transform="uppercase">UPPER</button>
+                    <button class="toggle-button" data-transform="lowercase">lower</button>
+                    <button class="toggle-button" data-transform="capitalize">Title</button>
+                </div>
+            </div>
+
+            <!-- Typography Presets -->
+            <div class="control-group">
+                <label class="control-label">Quick Presets</label>
+                <div class="preset-grid">
+                    <button class="preset-button" data-preset="headline">Headline</button>
+                    <button class="preset-button" data-preset="subheading">Subheading</button>
+                    <button class="preset-button" data-preset="body">Body Text</button>
+                    <button class="preset-button" data-preset="caption">Caption</button>
+                    <button class="preset-button" data-preset="display">Display</button>
+                    <button class="preset-button" data-preset="quote">Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <i class="fas fa-eye"></i>
+                    Live Preview
+                </h2>
+                <div class="toolbar">
+                    <button class="action-button" onclick="exportCSS()">
+                        <i class="fas fa-download"></i>
+                        Export CSS
+                    </button>
+                    <button class="action-button secondary" onclick="showAnalysis()">
+                        <i class="fas fa-chart-line"></i>
+                        Analysis
+                    </button>
+                    <button class="action-button secondary" onclick="resetAll()">
+                        <i class="fas fa-undo"></i>
+                        Reset
+                    </button>
+                    <button class="action-button secondary" onclick="toggleCustomText()">
+                        <i class="fas fa-edit"></i>
+                        Custom Text
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-content">
+                <div class="sample-text" id="sampleText">
+                    <h1>The Art of Typography</h1>
+                    <p>Typography is the art and technique of arranging type to make written language legible, readable and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.</p>
+                    
+                    <h2>Why Typography Matters</h2>
+                    <p>Good typography establishes a strong visual hierarchy, provides a graphic balance to the website, and sets the product's overall tone. Typography should guide and inform users, optimize readability and accessibility, and ensure an excellent user experience.</p>
+                    
+                    <blockquote style="border-left: 4px solid #3b82f6; padding-left: 1rem; margin: 1.5rem 0; font-style: italic;">
+                        "Typography is what language looks like."
+                    </blockquote>
+                    
+                    <h3>Key Principles</h3>
+                    <ul>
+                        <li>Hierarchy: Create clear visual levels of importance</li>
+                        <li>Contrast: Use different weights and sizes effectively</li>
+                        <li>Alignment: Maintain consistent text alignment</li>
+                        <li>Proximity: Group related elements together</li>
+                        <li>White Space: Use spacing to improve readability</li>
+                    </ul>
+                    
+                    <p><strong>Bold text example</strong> and <em>italic text example</em> show how emphasis can guide the reader's attention through the content while maintaining readability and visual appeal.</p>
+                    
+                    <small>This is small text that might be used for captions, footnotes, or supplementary information that supports the main content.</small>
+                </div>
+            </div>
+
+            <!-- Typography Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="charCount">0</div>
+                    <div class="stat-label">Characters</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordCount">0</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="readingTime">0</div>
+                    <div class="stat-label">Min Read</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lineCount">0</div>
+                    <div class="stat-label">Lines</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS Export Modal -->
+    <div class="modal" id="cssModal">
+        <div class="modal-content">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <i class="fas fa-code"></i>
+                    Generated CSS
+                </h3>
+                <button class="action-button secondary" onclick="closeCSSModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="code-block" id="cssCode">
+                <button class="copy-button" onclick="copyCSSCode()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <div style="margin-top: 1rem;">
+                <button class="action-button" onclick="downloadCSS()">
+                    <i class="fas fa-download"></i>
+                    Download CSS File
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typography Analysis Modal -->
+    <div class="modal" id="analysisModal">
+        <div class="modal-content">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <i class="fas fa-chart-line"></i>
+                    Typography Analysis
+                </h3>
+                <button class="action-button secondary" onclick="closeAnalysisModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="analysisContent"></div>
+        </div>
+    </div>
+
+    <!-- Custom Text Modal -->
+    <div class="modal" id="customTextModal">
+        <div class="modal-content">
+            <div class="panel-header">
+                <h3 class="panel-title">
+                    <i class="fas fa-edit"></i>
+                    Custom Sample Text
+                </h3>
+                <button class="action-button secondary" onclick="closeCustomTextModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <textarea class="control-input" id="customTextInput" rows="10" placeholder="Enter your custom text here..."></textarea>
+            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                <button class="action-button" onclick="applyCustomText()">
+                    <i class="fas fa-check"></i>
+                    Apply Text
+                </button>
+                <button class="action-button secondary" onclick="resetToDefaultText()">
+                    <i class="fas fa-undo"></i>
+                    Reset to Default
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div class="floating-panel" id="successNotification">
+        <i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 0.5rem;"></i>
+        <span id="notificationText">Action completed successfully!</span>
+    </div>
+
+    <script>
+        // State management
+        const typographyState = {
+            fontFamily: 'Inter',
+            fontWeight: '400',
+            fontSize: '16',
+            lineHeight: '1.5',
+            letterSpacing: '0',
+            wordSpacing: '0',
+            textColor: '#000000',
+            textAlign: 'left',
+            textTransform: 'none'
+        };
+
+        // Default sample text
+        const defaultSampleText = `
+            <h1>The Art of Typography</h1>
+            <p>Typography is the art and technique of arranging type to make written language legible, readable and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.</p>
+            
+            <h2>Why Typography Matters</h2>
+            <p>Good typography establishes a strong visual hierarchy, provides a graphic balance to the website, and sets the product's overall tone. Typography should guide and inform users, optimize readability and accessibility, and ensure an excellent user experience.</p>
+            
+            <blockquote style="border-left: 4px solid #3b82f6; padding-left: 1rem; margin: 1.5rem 0; font-style: italic;">
+                "Typography is what language looks like."
+            </blockquote>
+            
+            <h3>Key Principles</h3>
+            <ul>
+                <li>Hierarchy: Create clear visual levels of importance</li>
+                <li>Contrast: Use different weights and sizes effectively</li>
+                <li>Alignment: Maintain consistent text alignment</li>
+                <li>Proximity: Group related elements together</li>
+                <li>White Space: Use spacing to improve readability</li>
+            </ul>
+            
+            <p><strong>Bold text example</strong> and <em>italic text example</em> show how emphasis can guide the reader's attention through the content while maintaining readability and visual appeal.</p>
+            
+            <small>This is small text that might be used for captions, footnotes, or supplementary information that supports the main content.</small>
+        `;
+
+        // Typography presets
+        const presets = {
+            headline: {
+                fontFamily: 'Montserrat',
+                fontWeight: '700',
+                fontSize: '48',
+                lineHeight: '1.2',
+                letterSpacing: '-0.5',
+                wordSpacing: '0',
+                textTransform: 'none'
+            },
+            subheading: {
+                fontFamily: 'Inter',
+                fontWeight: '600',
+                fontSize: '24',
+                lineHeight: '1.4',
+                letterSpacing: '0',
+                wordSpacing: '0',
+                textTransform: 'none'
+            },
+            body: {
+                fontFamily: 'Inter',
+                fontWeight: '400',
+                fontSize: '16',
+                lineHeight: '1.6',
+                letterSpacing: '0',
+                wordSpacing: '0',
+                textTransform: 'none'
+            },
+            caption: {
+                fontFamily: 'Inter',
+                fontWeight: '400',
+                fontSize: '12',
+                lineHeight: '1.4',
+                letterSpacing: '0.5',
+                wordSpacing: '0',
+                textTransform: 'uppercase'
+            },
+            display: {
+                fontFamily: 'Playfair Display',
+                fontWeight: '700',
+                fontSize: '64',
+                lineHeight: '1.1',
+                letterSpacing: '-1',
+                wordSpacing: '0',
+                textTransform: 'none'
+            },
+            quote: {
+                fontFamily: 'Merriweather',
+                fontWeight: '400',
+                fontSize: '20',
+                lineHeight: '1.8',
+                letterSpacing: '0.2',
+                wordSpacing: '2',
+                textTransform: 'none'
+            }
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeControls();
+            updatePreview();
+            updateStats();
+            
+            // Add smooth loading animation
+            document.querySelector('.main-container').classList.add('animation-fade-in');
+        });
+
+        // Initialize all controls and event listeners
+        function initializeControls() {
+            // Font family dropdown
+            document.getElementById('fontFamily').addEventListener('change', function() {
+                typographyState.fontFamily = this.value;
+                updatePreview();
+            });
+
+            // Font weight buttons
+            document.querySelectorAll('[data-weight]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('[data-weight]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    typographyState.fontWeight = this.dataset.weight;
+                    updatePreview();
+                });
+            });
+
+            // Sliders
+            const sliders = [
+                { id: 'fontSize', property: 'fontSize', suffix: 'px' },
+                { id: 'lineHeight', property: 'lineHeight', suffix: '' },
+                { id: 'letterSpacing', property: 'letterSpacing', suffix: 'px' },
+                { id: 'wordSpacing', property: 'wordSpacing', suffix: 'px' }
+            ];
+
+            sliders.forEach(slider => {
+                const element = document.getElementById(slider.id);
+                const valueDisplay = document.getElementById(slider.id + 'Value');
+                
+                element.addEventListener('input', function() {
+                    const value = this.value;
+                    typographyState[slider.property] = value;
+                    valueDisplay.textContent = value + slider.suffix;
+                    updatePreview();
+                    updateStats();
+                });
+            });
+
+            // Color inputs
+            const textColorInput = document.getElementById('textColor');
+            const textColorPicker = document.getElementById('textColorPicker');
+            
+            textColorInput.addEventListener('input', function() {
+                typographyState.textColor = this.value;
+                textColorPicker.value = this.value;
+                updatePreview();
+            });
+            
+            textColorPicker.addEventListener('input', function() {
+                typographyState.textColor = this.value;
+                textColorInput.value = this.value;
+                updatePreview();
+            });
+
+            // Text alignment buttons
+            document.querySelectorAll('[data-align]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    typographyState.textAlign = this.dataset.align;
+                    updatePreview();
+                });
+            });
+
+            // Text transform buttons
+            document.querySelectorAll('[data-transform]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('[data-transform]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    typographyState.textTransform = this.dataset.transform;
+                    updatePreview();
+                });
+            });
+
+            // Preset buttons
+            document.querySelectorAll('[data-preset]').forEach(button => {
+                button.addEventListener('click', function() {
+                    applyPreset(this.dataset.preset);
+                    showNotification(`Applied ${this.dataset.preset} preset`);
+                });
+            });
+        }
+
+        // Update the preview with current typography settings
+        function updatePreview() {
+            const sampleText = document.getElementById('sampleText');
+            
+            sampleText.style.fontFamily = `"${typographyState.fontFamily}", sans-serif`;
+            sampleText.style.fontWeight = typographyState.fontWeight;
+            sampleText.style.fontSize = typographyState.fontSize + 'px';
+            sampleText.style.lineHeight = typographyState.lineHeight;
+            sampleText.style.letterSpacing = typographyState.letterSpacing + 'px';
+            sampleText.style.wordSpacing = typographyState.wordSpacing + 'px';
+            sampleText.style.color = typographyState.textColor;
+            sampleText.style.textAlign = typographyState.textAlign;
+            sampleText.style.textTransform = typographyState.textTransform;
+        }
+
+        // Apply typography preset
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            if (!preset) return;
+
+            // Update state
+            Object.assign(typographyState, preset);
+
+            // Update UI controls
+            document.getElementById('fontFamily').value = preset.fontFamily;
+            document.getElementById('fontSize').value = preset.fontSize;
+            document.getElementById('fontSizeValue').textContent = preset.fontSize + 'px';
+            document.getElementById('lineHeight').value = preset.lineHeight;
+            document.getElementById('lineHeightValue').textContent = preset.lineHeight;
+            document.getElementById('letterSpacing').value = preset.letterSpacing;
+            document.getElementById('letterSpacingValue').textContent = preset.letterSpacing + 'px';
+            document.getElementById('wordSpacing').value = preset.wordSpacing;
+            document.getElementById('wordSpacingValue').textContent = preset.wordSpacing + 'px';
+
+            // Update weight buttons
+            document.querySelectorAll('[data-weight]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-weight="${preset.fontWeight}"]`).classList.add('active');
+
+            // Update transform buttons
+            document.querySelectorAll('[data-transform]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-transform="${preset.textTransform}"]`).classList.add('active');
+
+            updatePreview();
+            updateStats();
+        }
+
+        // Generate CSS code
+        function generateCSS() {
+            const css = `/* Generated Typography Styles */
+.typography-style {
+    font-family: "${typographyState.fontFamily}", sans-serif;
+    font-weight: ${typographyState.fontWeight};
+    font-size: ${typographyState.fontSize}px;
+    line-height: ${typographyState.lineHeight};
+    letter-spacing: ${typographyState.letterSpacing}px;
+    word-spacing: ${typographyState.wordSpacing}px;
+    color: ${typographyState.textColor};
+    text-align: ${typographyState.textAlign};
+    text-transform: ${typographyState.textTransform};
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    .typography-style {
+        font-size: ${Math.max(12, parseInt(typographyState.fontSize) * 0.8)}px;
+        line-height: ${Math.max(1.2, parseFloat(typographyState.lineHeight) * 0.9)};
+    }
+}
+
+/* Print Styles */
+@media print {
+    .typography-style {
+        font-size: ${Math.max(10, parseInt(typographyState.fontSize) * 0.75)}pt;
+        color: black !important;
+    }
+}`;
+            return css;
+        }
+
+        // Export CSS functionality
+        function exportCSS() {
+            const css = generateCSS();
+            document.getElementById('cssCode').innerHTML = `<button class="copy-button" onclick="copyCSSCode()"><i class="fas fa-copy"></i></button>${css}`;
+            document.getElementById('cssModal').style.display = 'flex';
+        }
+
+        function closeCSSModal() {
+            document.getElementById('cssModal').style.display = 'none';
+        }
+
+        function copyCSSCode() {
+            const cssText = generateCSS();
+            navigator.clipboard.writeText(cssText).then(() => {
+                showNotification('CSS copied to clipboard!');
+            });
+        }
+
+        function downloadCSS() {
+            const css = generateCSS();
+            const blob = new Blob([css], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'typography-styles.css';
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('CSS file downloaded!');
+        }
+
+        // Typography analysis
+        function showAnalysis() {
+            const analysis = generateAnalysis();
+            document.getElementById('analysisContent').innerHTML = analysis;
+            document.getElementById('analysisModal').style.display = 'flex';
+        }
+
+        function closeAnalysisModal() {
+            document.getElementById('analysisModal').style.display = 'none';
+        }
+
+        function generateAnalysis() {
+            const fontSize = parseInt(typographyState.fontSize);
+            const lineHeight = parseFloat(typographyState.lineHeight);
+            const letterSpacing = parseFloat(typographyState.letterSpacing);
+
+            let readabilityScore = 100;
+            let recommendations = [];
+
+            // Font size analysis
+            if (fontSize < 14) {
+                readabilityScore -= 20;
+                recommendations.push('Consider increasing font size for better readability (minimum 14px recommended)');
+            } else if (fontSize > 18) {
+                recommendations.push('Large font size - great for headlines and emphasis');
+            }
+
+            // Line height analysis
+            if (lineHeight < 1.2) {
+                readabilityScore -= 15;
+                recommendations.push('Line height is too tight - consider 1.4-1.6 for body text');
+            } else if (lineHeight > 2) {
+                readabilityScore -= 10;
+                recommendations.push('Line height might be too loose - could affect text cohesion');
+            }
+
+            // Letter spacing analysis
+            if (Math.abs(letterSpacing) > 2) {
+                readabilityScore -= 10;
+                recommendations.push('Extreme letter spacing may impact readability');
+            }
+
+            // Font pairing suggestions
+            const fontCategory = getFontCategory(typographyState.fontFamily);
+            const pairingSuggestions = getFontPairings(fontCategory);
+
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: ${readabilityScore > 80 ? 'var(--success-color)' : readabilityScore > 60 ? 'var(--warning-color)' : '#ef4444'}">${readabilityScore}</div>
+                        <div class="stat-label">Readability Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${Math.round(fontSize * lineHeight)}px</div>
+                        <div class="stat-label">Line Height (px)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${fontCategory}</div>
+                        <div class="stat-label">Font Category</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${getContrastRatio()}</div>
+                        <div class="stat-label">Contrast Ratio</div>
+                    </div>
+                </div>
+
+                <h4 style="margin: 2rem 0 1rem 0; color: var(--text-primary);">Recommendations</h4>
+                <ul style="color: var(--text-secondary); line-height: 1.6;">
+                    ${recommendations.length > 0 ? recommendations.map(rec => `<li>${rec}</li>`).join('') : '<li>Your typography settings look great!</li>'}
+                </ul>
+
+                <h4 style="margin: 2rem 0 1rem 0; color: var(--text-primary);">Font Pairing Suggestions</h4>
+                <div style="color: var(--text-secondary); line-height: 1.6;">
+                    ${pairingSuggestions.map(pair => `<div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">${pair}</div>`).join('')}
+                </div>
+
+                <h4 style="margin: 2rem 0 1rem 0; color: var(--text-primary);">Accessibility Notes</h4>
+                <ul style="color: var(--text-secondary); line-height: 1.6;">
+                    <li>Current contrast ratio: ${getContrastRatio()} ${getContrastRatio() >= 4.5 ? '✅' : '❌'}</li>
+                    <li>Minimum recommended contrast ratio: 4.5:1 for normal text</li>
+                    <li>Font size: ${fontSize >= 16 ? 'Good' : 'Consider larger'} for accessibility</li>
+                </ul>
+            `;
+        }
+
+        function getFontCategory(fontFamily) {
+            const serifFonts = ['Georgia', 'Times', 'Merriweather', 'Playfair Display', 'Crimson Text', 'Lora'];
+            const sansSerifFonts = ['Inter', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Poppins', 'Source Sans Pro', 'Nunito', 'Arial', 'Helvetica'];
+            
+            if (serifFonts.includes(fontFamily)) return 'Serif';
+            if (sansSerifFonts.includes(fontFamily)) return 'Sans-serif';
+            return 'Other';
+        }
+
+        function getFontPairings(category) {
+            if (category === 'Serif') {
+                return [
+                    'Pair with Inter for body text',
+                    'Combine with Montserrat for headings',
+                    'Use with Open Sans for contrast'
+                ];
+            } else if (category === 'Sans-serif') {
+                return [
+                    'Pair with Merriweather for emphasis',
+                    'Combine with Playfair Display for elegance',
+                    'Use with Georgia for traditional feel'
+                ];
+            }
+            return ['Experiment with serif and sans-serif combinations'];
+        }
+
+        function getContrastRatio() {
+            // Simplified contrast calculation (actual calculation would be more complex)
+            const textColor = typographyState.textColor;
+            const bgColor = '#ffffff'; // Assuming white background
+            
+            // This is a simplified version - real implementation would need proper color parsing
+            if (textColor === '#000000') return '21:1';
+            if (textColor.startsWith('#f') || textColor.startsWith('#e')) return '1.5:1';
+            return '7:1'; // Default estimation
+        }
+
+        // Custom text functionality
+        function toggleCustomText() {
+            document.getElementById('customTextModal').style.display = 'flex';
+        }
+
+        function closeCustomTextModal() {
+            document.getElementById('customTextModal').style.display = 'none';
+        }
+
+        function applyCustomText() {
+            const customText = document.getElementById('customTextInput').value;
+            if (customText.trim()) {
+                document.getElementById('sampleText').innerHTML = customText.replace(/\n/g, '<br>');
+                updateStats();
+                closeCustomTextModal();
+                showNotification('Custom text applied!');
+            }
+        }
+
+        function resetToDefaultText() {
+            document.getElementById('sampleText').innerHTML = defaultSampleText;
+            document.getElementById('customTextInput').value = '';
+            updateStats();
+            closeCustomTextModal();
+            showNotification('Reset to default text!');
+        }
+
+        // Reset all settings
+        function resetAll() {
+            // Reset state to defaults
+            Object.assign(typographyState, {
+                fontFamily: 'Inter',
+                fontWeight: '400',
+                fontSize: '16',
+                lineHeight: '1.5',
+                letterSpacing: '0',
+                wordSpacing: '0',
+                textColor: '#000000',
+                textAlign: 'left',
+                textTransform: 'none'
+            });
+
+            // Reset UI controls
+            document.getElementById('fontFamily').value = 'Inter';
+            document.getElementById('fontSize').value = '16';
+            document.getElementById('fontSizeValue').textContent = '16px';
+            document.getElementById('lineHeight').value = '1.5';
+            document.getElementById('lineHeightValue').textContent = '1.5';
+            document.getElementById('letterSpacing').value = '0';
+            document.getElementById('letterSpacingValue').textContent = '0px';
+            document.getElementById('wordSpacing').value = '0';
+            document.getElementById('wordSpacingValue').textContent = '0px';
+            document.getElementById('textColor').value = '#000000';
+            document.getElementById('textColorPicker').value = '#000000';
+
+            // Reset button states
+            document.querySelectorAll('[data-weight]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-weight="400"]').classList.add('active');
+            document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-align="left"]').classList.add('active');
+            document.querySelectorAll('[data-transform]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-transform="none"]').classList.add('active');
+
+            // Reset sample text
+            document.getElementById('sampleText').innerHTML = defaultSampleText;
+
+            updatePreview();
+            updateStats();
+            showNotification('All settings reset!');
+        }
+
+        // Update statistics
+        function updateStats() {
+            const sampleText = document.getElementById('sampleText');
+            const text = sampleText.textContent || sampleText.innerText;
+            
+            const charCount = text.length;
+            const wordCount = text.trim().split(/\s+/).length;
+            const readingTime = Math.ceil(wordCount / 200); // Average reading speed
+            const lineCount = Math.ceil(wordCount / 10); // Estimated lines
+
+            document.getElementById('charCount').textContent = charCount.toLocaleString();
+            document.getElementById('wordCount').textContent = wordCount.toLocaleString();
+            document.getElementById('readingTime').textContent = readingTime;
+            document.getElementById('lineCount').textContent = lineCount;
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('successNotification');
+            document.getElementById('notificationText').textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey || event.metaKey) {
+                switch(event.key) {
+                    case 'e':
+                        event.preventDefault();
+                        exportCSS();
+                        break;
+                    case 'r':
+                        event.preventDefault();
+                        resetAll();
+                        break;
+                    case 't':
+                        event.preventDefault();
+                        toggleCustomText();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
